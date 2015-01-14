@@ -9,6 +9,10 @@ You can use this script from the shell like this::
 $ fasta_to_phylip seqs.fasta seqs.phylip
 """
 
+"""
+Modified by Wesley Gerelle for creating PAML-compliant phylip files.
+"""
+
 ###############################################################################
 class Sequence(object):
     """The Sequence object has a string *header* and
