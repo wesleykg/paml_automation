@@ -2,4 +2,8 @@
 .Rhistory
 .RData
 .idea
-.DS_Store
+*.fasta
+*.fas
+*.fa
+*.phylip
+*.phy
