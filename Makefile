@@ -1,10 +1,13 @@
-all: $(patsubst %.fasta, %_paml.phy, $(wildcard *.fasta))
+all: $(patsubst %.fasta, %.phy, $(wildcard *.fasta))
 
 clean:
-	rm -f $(patsubst %.fasta, %_paml.phy, $(wildcard *.fasta))
+	rm -drf paml
 
-%_paml.phy: %.fasta
+%.phy: %.fasta
 	python ./scripts/01_fasta_to_phylip $< $@
+	mkdir -p paml
+	mkdir paml/$@
+	mv $@ paml/$@
 
 
 .PHONY: all clean
