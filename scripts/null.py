@@ -35,5 +35,5 @@ results = cml.run(verbose = True)
 
 lnL = results["NSsites"][2]["lnL"]
 
-with open("lnL_null", "w+") as file:
+with open("lnL_null", "w") as file:
     file.write(str(lnL))
