@@ -6,8 +6,8 @@ clean:
 %.phy: %.fasta
 	python ./scripts/01_converter.py $< $@
 	mkdir -p paml
-	mkdir paml/$@
-	mv $@ paml/$@
+	mkdir paml/$(*F)
+	mv $@ paml/$(*F)
 
 
 .PHONY: all clean

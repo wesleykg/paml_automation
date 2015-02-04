@@ -1,5 +1,5 @@
 from Bio.Phylo.PAML import codeml
-import sys
+import sys, os
 
 cml = codeml.Codeml()
 cml.alignment = sys.argv[1]
@@ -35,5 +35,9 @@ results = cml.run(verbose = True)
 
 lnL = results["NSsites"][2]["lnL"]
 
-with open("lnL_null", "w") as file:
+name = os.path.split(os.getcwd())[1]
+print name
+results_file = "lnL_null_" + name + ".txt"
+
+with open(results_file, "w") as file:
     file.write(str(lnL))
