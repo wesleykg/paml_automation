@@ -1,20 +1,21 @@
 from Bio.Phylo.PAML import codeml
 import sys, os
 
-script_rel_dir = os.getcwd()
-paml_dir = os.path.join(os.path.relpath(os.path.dirname('paml/simple')), os.path.basename("paml/simple"))
-working_dir = os.path.join(script_rel_dir, paml_dir)
+gene_name = sys.argv[1] # Store the gene filename as a string
+gene_name = gene_name[:-4] # Removes the .phy suffix from the gene filename
 
+project_dir = os.getcwd() # Absolute path to the project directory
+gene_dir = os.path.join("paml", gene_name) # Relative path to the gene directory
+working_dir = os.path.join(project_dir, gene_dir) # Absolute path to the gene directory
+
+## Initializes codeml module
 cml = codeml.Codeml()
 cml.working_dir = working_dir
-print cml.working_dir
-cml.alignment = os.path.join(working_dir, "simple.phy")
-print cml.alignment
-cml.tree = "simple.tre"
-print cml.tree
+cml.alignment = os.path.join(working_dir, sys.argv[1])
+cml.tree = os.path.join(project_dir, sys.argv[2])
 cml.out_file = os.path.join(working_dir, "mlc")
-print cml.out_file
 
+## Sets codeml options
 cml.set_options(CodonFreq = 2)
 cml.set_options(NSsites = [2])
 cml.set_options(fix_omega = 1)
@@ -40,12 +41,11 @@ cml.set_options(ndata = 1)
 cml.set_options(cleandata = 0)
 cml.set_options(fix_blength = 0)
 
+## Runs codeml
 results = cml.run(verbose = True)
 
-lnL = results["NSsites"][2]["lnL"]
-
-name = os.path.split(working_dir)[1]
-results_file = os.path.join(working_dir, "lnL_null_" + name + ".txt")
-
-with open(results_file, "w") as file:
-    file.write(str(lnL))
+## Saves the log-likelihood value to file
+lnL = results["NSsites"][2]["lnL"] # Stores the log-likelihood value
+results_filename = os.path.join(working_dir, "lnL_null_" + filename + ".txt") # Stores the results_filename
+with open(results_filename, "w") as file: # Creates the file for writing
+    file.write(str(lnL)) # Writes the log-likelihood to file
