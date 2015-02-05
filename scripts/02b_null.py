@@ -10,10 +10,10 @@ working_dir = os.path.join(project_dir, gene_dir) # Absolute path to the gene di
 
 ## Initializes codeml module
 cml = codeml.Codeml()
-cml.working_dir = working_dir
+cml.working_dir = os.path.join(working_dir, "null")
 cml.alignment = os.path.join(working_dir, sys.argv[1])
 cml.tree = os.path.join(project_dir, sys.argv[2])
-cml.out_file = os.path.join(working_dir, "mlc")
+cml.out_file = os.path.join(cml.working_dir, "mlc")
 
 ## Sets codeml options
 cml.set_options(CodonFreq = 2)
@@ -46,6 +46,6 @@ results = cml.run(verbose = True)
 
 ## Saves the log-likelihood value to file
 lnL = results["NSsites"][2]["lnL"] # Stores the log-likelihood value
-results_filename = os.path.join(working_dir, "lnL_null_" + filename + ".txt") # Stores the results_filename
+results_filename = os.path.join(working_dir, "lnL_null_" + gene_name + ".txt") # Stores the results_filename
 with open(results_filename, "w") as file: # Creates the file for writing
     file.write(str(lnL)) # Writes the log-likelihood to file
