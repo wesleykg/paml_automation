@@ -1,10 +1,19 @@
 from Bio.Phylo.PAML import codeml
 import sys, os
 
+script_rel_dir = os.getcwd()
+paml_dir = os.path.join(os.path.relpath(os.path.dirname('paml/simple')), os.path.basename("paml/simple"))
+working_dir = os.path.join(script_rel_dir, paml_dir)
+
 cml = codeml.Codeml()
-cml.alignment = sys.argv[1]
+cml.working_dir = working_dir
+print cml.working_dir
+cml.alignment = os.path.join(working_dir, "simple.phy")
+print cml.alignment
 cml.tree = "simple.tre"
-cml.out_file = "mlc"
+print cml.tree
+cml.out_file = os.path.join(working_dir, "mlc")
+print cml.out_file
 
 cml.set_options(CodonFreq = 2)
 cml.set_options(NSsites = [2])
@@ -35,9 +44,8 @@ results = cml.run(verbose = True)
 
 lnL = results["NSsites"][2]["lnL"]
 
-name = os.path.split(os.getcwd())[1]
-print name
-results_file = "lnL_null_" + name + ".txt"
+name = os.path.split(working_dir)[1]
+results_file = os.path.join(working_dir, "lnL_null_" + name + ".txt")
 
 with open(results_file, "w") as file:
     file.write(str(lnL))

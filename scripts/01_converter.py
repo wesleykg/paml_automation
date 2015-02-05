@@ -15,7 +15,7 @@ with tempfile.TemporaryFile() as temp: # Creates the tempfile and opens it
     AlignIO.write(temp, sys.argv[2], "phylip-relaxed") # Converts the tempfile
 
 ## Adds the 'I' signifier to the file so PAML
-## knows the file is interleaved, not sequential
+## knows the file is interleaved
 with open(sys.argv[2], "r") as file: # Opens the file
     data2 = file.readlines() # Reads the file into memory as a list composed of each line
     data2[0] = data2[0].rstrip("\r\n") # Removes newline characters from the first line; should be OS nonspecific, but I haven't tested that
