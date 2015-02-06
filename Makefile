@@ -1,8 +1,14 @@
-all: alternative null
+all: branchsites2 branchsites1
+
+branchsites2: alternative null
+
+branchsites1: alternative m1
 
 alternative: $(patsubst %.fasta, lnL_alternative_%, $(wildcard *.fasta))
 
 null: $(patsubst %.fasta, lnL_null_%, $(wildcard *.fasta))
+
+m1: $(patsubst %.fasta, lnL_m1_%, $(wildcard *.fasta))
 
 clean:
 	rm -drf paml
@@ -21,6 +27,10 @@ lnL_null_%: %.phy
 	mkdir paml/$*/null
 	python ./scripts/02b_null.py $< *.tre
 
-.PHONY: all alternative null clean
+lnL_m1_%: %.phy
+	mkdir paml/$*/m1
+	python ./scripts/02c_m1.py $< *.tre
+
+.PHONY: all branchsites2 branchsites1 alternative null m1 clean
 .DELETE_ON_ERROR:
 .SECONDARY:
