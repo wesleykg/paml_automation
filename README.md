@@ -23,7 +23,7 @@ This set of scripts allows you to run Branch-Sites Test 1 and 2 in PAML and in t
   * `branchsites2`: Run Branch-Sites Test 2
   * `alternative`: Run the alternative model of Branch-Sites Test 1 & 2
   * `null`: Run the null model of Branch-Sites Test 2
-  * `m1`: Run the null model of Branch-Sites Test1
+  * `m1`: Run the null model of Branch-Sites Test 1
   * `clean`: Removes any files created by make
 
 ---
