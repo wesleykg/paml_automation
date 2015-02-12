@@ -4,12 +4,13 @@ from Bio import AlignIO
 ## Prep the file for PAML by removing stop codons and standardizing gap characters
 with open(sys.argv[1], "r") as file: # Opens the file
     data1 = file.read() # Reads the file into memory as a string
+    ## Stops the script if the FASTA file has space characters
+    if " " in data1:
+        sys.exit("*** YOUR FASTA FILE CONTAINS SPACES. PHYLIP DOESN'T ALLOW SPACES. ***\n*** PERHAPS TRY SWITCHING TO UNDERLINES? ***")
     ## Checks to see if the file is Classic Mac formatted (\r)
     ## and changes it to Unix formatted (\n) if it is
     if "\r" in data1:
-        print "Yes"
         if "\n" not in data1:
-            print "No"
             data1 = data1.replace("\r", "\n")
     data1 = re.sub("TAA(?=\n>|\n\Z)|TAG(?=\n>|\n\Z)|TGA(?=\n>|\n\Z)", "???", data1, flags = re.IGNORECASE) # Replaces stop codons with ???
     data1 = data1.replace("~", "-") # Replaces all '~' with '-'
