@@ -21,9 +21,12 @@ This set of scripts allows you to run Branch-Sites Test 1 and 2 in PAML and in t
   * `all`: Runs Branch-Sites Test 1 & 2
   * `branchsites1`: Run Branch-Sites Test 1
   * `branchsites2`: Run Branch-Sites Test 2
+  * `branch`: Run Branch Test
   * `alternative`: Run the alternative model of Branch-Sites Test 1 & 2
   * `null`: Run the null model of Branch-Sites Test 2
   * `m1`: Run the null model of Branch-Sites Test 1
+  * `m0`: Run the one-ratio model of Branch Test
+  * `nratios`: Run the n-ratio model of Branch Test
   * `clean`: Removes any files created by make
 
 ---
