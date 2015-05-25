@@ -44,8 +44,10 @@ cml.set_options(fix_blength = 0)
 ## Runs codeml
 results = cml.run(verbose = True)
 
-## Saves the log-likelihood value to file
-lnL = results["NSsites"][1]["lnL"] # Stores the log-likelihood value
-results_filename = os.path.join(working_dir, "lnL_m1_" + gene_name + ".txt") # Stores the results_filename
+## Stores the results_filename
+results_filename = os.path.join(working_dir, "lnL_m1_" + gene_name + ".csv")
+
 with open(results_filename, "w") as file: # Creates the file for writing
-    file.write(str(lnL)) # Writes the log-likelihood to file
+    data =  "Gene,lnL\n" # First line of file for column names
+    data += gene_name + "," + str(results["NSsites"][1]["lnL"]) + '\n' # Adds the data as a second line
+    file.write(data) # Writes the log-likelihood to file
