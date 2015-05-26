@@ -1,5 +1,7 @@
 all: branchsites2 branchsites1
 
+test: results.csv
+
 branchsites2: alternative null
 
 branchsites1: alternative m1
@@ -45,6 +47,9 @@ lnL_nratios_%: %.phy
 	mkdir paml/$*/nratios
 	python ./scripts/02e_nratios.py $< *.tre
 
-.PHONY: all branchsites2 branchsites1 alternative null m1 clean
+results.csv: *.csv
+	find ./paml/ -type f -wholename $< -exec cat {} \; > ./paml/$@
+
+.PHONY: all branchsites2 branchsites1 alternative null m1 clean *.csv
 .DELETE_ON_ERROR:
 .SECONDARY:
