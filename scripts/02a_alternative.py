@@ -48,6 +48,5 @@ results = cml.run(verbose = True)
 results_filename = os.path.join(working_dir, "lnL_alternative_" + gene_name + ".csv")
 
 with open(results_filename, "w") as file: # Creates the file for writing
-    data =  "Gene,lnL\n" # First line of file for column names
-    data += gene_name + "," + str(results["NSsites"][2]["lnL"]) + '\n' # Adds the data as a second line
+    data = gene_name + ",alternative," + str(results["NSsites"][2]["lnL"]) + '\n' # Adds the data as a second line
     file.write(data) # Writes the log-likelihood to file
