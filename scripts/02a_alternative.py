@@ -5,7 +5,7 @@ gene_name = sys.argv[1] # Store the gene filename as a string
 gene_name = gene_name[:-4] # Removes the .phy suffix from the gene filename
 
 project_dir = os.getcwd() # Absolute path to the project directory
-gene_dir = os.path.join("paml", gene_name) # Relative path to the gene directory
+gene_dir = os.path.join("results", gene_name) # Relative path to the gene directory
 working_dir = os.path.join(project_dir, gene_dir) # Absolute path to the gene directory
 
 ## Initializes codeml module

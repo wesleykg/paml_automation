@@ -17,37 +17,37 @@ m0: $(patsubst %.fasta, lnL_m0_%.csv, $(wildcard *.fasta))
 nratios: $(patsubst %.fasta, lnL_nratios_%.csv, $(wildcard *.fasta))
 
 clean:
-	rm -drf paml
+	rm -drf results
 
 %.phy: %.fasta
 	python ./scripts/01_converter.py $< $@
-	mkdir -p paml/$*
-	mv $@ paml/$*
+	mkdir -p results/$*
+	mv $@ results/$*
 
 lnL_alternative_%.csv: %.phy
-	mkdir paml/$*/alternative
+	mkdir results/$*/alternative
 	python ./scripts/02a_alternative.py $< *.tre
 
 lnL_null_%.csv: %.phy
-	mkdir paml/$*/null
+	mkdir results/$*/null
 	python ./scripts/02b_null.py $< *.tre
 
 lnL_m1_%.csv: %.phy
-	mkdir paml/$*/m1
+	mkdir results/$*/m1
 	python ./scripts/02c_m1.py $< *.tre
 
 lnL_m0_%.csv: %.phy
-	mkdir paml/$*/m0
+	mkdir results/$*/m0
 	python ./scripts/02d_m0.py $< *.tre
 
 lnL_nratios_%.csv: %.phy
-	mkdir paml/$*/nratios
+	mkdir results/$*/nratios
 	python ./scripts/02e_nratios.py $< *.tre
 
 lnL_results = $(wildcard lnL_*.csv)
 
 results.csv: $(lnL_results)
-	find ./paml -type f -mindepth 2 -wholename *.csv -exec cat {} \; > ./paml/$@
+	find ./results -type f -mindepth 2 -wholename *.csv -exec cat {} \; > ./results/$@
 
 .PHONY: all branchsites2 branchsites1 alternative null m1 clean
 .DELETE_ON_ERROR:
