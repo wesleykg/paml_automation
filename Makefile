@@ -1,4 +1,4 @@
-all: branchsites2 branchsites1 results.csv
+all: alternative null m1 results.csv
 
 branchsites2: alternative null results.csv
 
@@ -18,8 +18,6 @@ nratios: $(patsubst %.fasta, lnL_nratios_%.csv, $(wildcard *.fasta))
 
 clean:
 	rm -drf paml
-
-VPATH = ./sequences
 
 %.phy: %.fasta
 	python ./scripts/01_converter.py $< $@
@@ -49,7 +47,7 @@ lnL_nratios_%.csv: %.phy
 lnL_results = $(wildcard lnL_*.csv)
 
 results.csv: $(lnL_results)
-	find ./paml/ -type f -wholename *.csv -exec cat {} \; > ./paml/$@
+	find ./paml -type f -mindepth 2 -wholename *.csv -exec cat {} \; > ./paml/$@
 
 .PHONY: all branchsites2 branchsites1 alternative null m1 clean
 .DELETE_ON_ERROR:
