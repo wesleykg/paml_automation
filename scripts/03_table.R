@@ -1,1 +1,5 @@
-read.csv(file = "results.csv", header = FALSE)
+lnL_results <- read.csv(file = "results/results.csv", 
+												header = FALSE, 
+												col.names = c("gene", "method", "lnL")
+												)
+
