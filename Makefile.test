@@ -1,0 +1,28 @@
+all: $(patsubst %.fasta, lnL_%.csv, $(wildcard *.fasta)) results.csv
+
+#branchsites2: alternative null results.csv
+
+#branchsites1: alternative m1 results.csv
+
+#branch: m0 nratios results.csv
+
+clean:
+	rm -drf results
+
+%.phy: %.fasta
+	python ./scripts/01_converter.py $< $@
+	mkdir -p results/$*
+	mv $@ results/$*
+
+lnL_%.csv: %.phy
+	mkdir results/$*/$(method)
+	python ./scripts/02_codeml.py $< *.tre $(method)
+
+lnL_results = $(wildcard lnL_*.csv)
+
+results.csv: $(lnL_results)
+	find ./results -type f -mindepth 2 -wholename *.csv -exec cat {} \; > ./results/$@
+
+.PHONY: all branchsites2 branchsites1 alternative null m1 clean
+.DELETE_ON_ERROR:
+.SECONDARY:
