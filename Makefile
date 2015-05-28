@@ -21,6 +21,14 @@ ifeq ($(method),branchsites1)
 	mkdir -p results/$*/m1
 	python ./scripts/02_codeml.py $< *.tre m1
 else
+ifeq ($(method),both)
+	mkdir -p results/$*/alternative
+	python ./scripts/02_codeml.py $< *.tre alternative
+	mkdir -p results/$*/m1
+	python ./scripts/02_codeml.py $< *.tre null
+	mkdir -p results/$*/m1
+	python ./scripts/02_codeml.py $< *.tre m1
+else
 ifeq ($(method),branch)
 	mkdir -p results/$*/m0
 	python ./scripts/02_codeml.py $< *.tre m0
@@ -29,6 +37,7 @@ ifeq ($(method),branch)
 else
 	mkdir -p results/$*/$(method)
 	python ./scripts/02_codeml.py $< *.tre $(method)
+endif
 endif
 endif
 endif

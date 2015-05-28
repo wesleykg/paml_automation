@@ -24,7 +24,7 @@ This set of scripts allows you to automate running codeml from PAML and in the f
 4. Type `make` followed by `method=` any of the following commands to execute the program
   * `branchsites1`: Run Branch-Sites Test 1
   * `branchsites2`: Run Branch-Sites Test 2
-  * `branchsites1&2`: Runs Branch-Sites Test 1 & 2
+  * `both`: Runs Branch-Sites Test 1 & 2
   * `branch`: Run Branch Test
 
   * `alternative`: Run the alternative model of Branch-Sites Test 1 & 2
