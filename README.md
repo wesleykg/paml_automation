@@ -26,13 +26,11 @@ This set of scripts allows you to automate running codeml from PAML and in the f
   * `branchsites2`: Run Branch-Sites Test 2
   * `both`: Runs Branch-Sites Test 1 & 2
   * `branch`: Run Branch Test
-
   * `alternative`: Run the alternative model of Branch-Sites Test 1 & 2
   * `null`: Run the null model of Branch-Sites Test 2
   * `m1`: Run the null model of Branch-Sites Test 1
   * `m0`: Run the one-ratio model of Branch Test
   * `nratios`: Run the n-ratio model of Branch Test
-
   * `clean`: Removes any files created by make
 
 ---
