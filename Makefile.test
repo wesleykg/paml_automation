@@ -1,11 +1,5 @@
 all: $(patsubst %.fasta, lnL_%.csv, $(wildcard *.fasta)) results.csv
 
-#branchsites2: alternative null results.csv
-
-#branchsites1: alternative m1 results.csv
-
-#branch: m0 nratios results.csv
-
 clean:
 	rm -drf results
 
@@ -15,8 +9,27 @@ clean:
 	mv $@ results/$*
 
 lnL_%.csv: %.phy
-	mkdir results/$*/$(method)
-	python ./scripts/02_codeml.py $< *.tre $(method)
+ifeq ($(method),branchsites2)
+mkdir results/$*/alternative
+python ./scripts/02_codeml.py $< *.tre alternative
+mkdir results/$*/null
+python ./scripts/02_codeml.py $< *.tre null
+else
+ifeq ($(method),branchsites1)
+mkdir results/$*/alternative
+python ./scripts/02_codeml.py $< *.tre alternative
+mkdir results/$*/m1
+python ./scripts/02_codeml.py $< *.tre m1
+else
+ifeq ($(method),branch)
+mkdir results/$*/m0
+python ./scripts/02_codeml.py $< *.tre m0
+mkdir results/$*/nratios
+python ./scripts/02_codeml.py $< *.tre nratios
+else
+mkdir results/$*/$(method)
+python ./scripts/02_codeml.py $< *.tre $(method)
+endif
 
 lnL_results = $(wildcard lnL_*.csv)
 
