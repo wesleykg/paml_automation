@@ -1,4 +1,4 @@
-all: $(patsubst %.fasta, lnL_%.csv, $(wildcard *.fasta))
+all: $(patsubst %.fasta, lnL_%.csv, $(wildcard *.fasta)) results.csv
 
 clean:
 	rm -drf results
@@ -16,18 +16,18 @@ ifeq ($(method),branchsites2)
 	python ./scripts/02_codeml.py $< *.tre null
 else
 ifeq ($(method),branchsites1)
-	mkdir results/$*/alternative
+	mkdir -p results/$*/alternative
 	python ./scripts/02_codeml.py $< *.tre alternative
-	mkdir results/$*/m1
+	mkdir -p results/$*/m1
 	python ./scripts/02_codeml.py $< *.tre m1
 else
 ifeq ($(method),branch)
-mkdir results/$*/m0
-python ./scripts/02_codeml.py $< *.tre m0
-mkdir results/$*/nratios
-python ./scripts/02_codeml.py $< *.tre nratios
+	mkdir -p results/$*/m0
+	python ./scripts/02_codeml.py $< *.tre m0
+	mkdir -p results/$*/nratios
+	python ./scripts/02_codeml.py $< *.tre nratios
 else
-	mkdir results/$*/$(method)
+	mkdir -p results/$*/$(method)
 	python ./scripts/02_codeml.py $< *.tre $(method)
 endif
 endif

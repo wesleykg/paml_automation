@@ -26,7 +26,7 @@ elif method == "m0":
     model = 0
     NSsites = [0]
     fix_omega = 0
-elif method == "branch":
+elif method == "nratios":
     model = 2
     NSsites = [0]
     fix_omega = 0
@@ -75,7 +75,7 @@ elif method == "m1":
     lnL_result = results["NSsites"][1]["lnL"]
 elif method == "m0":
     lnL_result = results["NSsites"][0]["lnL"]
-elif method == "branch":
+elif method == "nratios":
     lnL_result = results["NSsites"][0]["lnL"]
 
 ## Stores the results_filename
