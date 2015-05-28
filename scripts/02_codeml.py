@@ -2,7 +2,7 @@ from Bio.Phylo.PAML import codeml
 import sys, os
 
 gene_file = sys.argv[1] # Store the gene filename as a string
-gene_name = gene_name[:-4] # Removes the .phy suffix from the gene filename
+gene_name = gene_file[:-4] # Removes the .phy suffix from the gene filename
 tree_file = sys.argv[2]
 method = sys.argv[3]
 
@@ -67,9 +67,20 @@ cml.set_options(fix_blength = 0)
 ## Runs codeml
 results = cml.run(verbose = True)
 
+if method == "alternative":
+    lnL_result = results["NSsites"][2]["lnL"]
+elif method == "null":
+    lnL_result = results["NSsites"][2]["lnL"]
+elif method == "m1":
+    lnL_result = results["NSsites"][1]["lnL"]
+elif method == "m0":
+    lnL_result = results["NSsites"][0]["lnL"]
+elif method == "branch":
+    lnL_result = results["NSsites"][0]["lnL"]
+
 ## Stores the results_filename
 results_filename = os.path.join(working_dir, "lnL_" + method + "_" + gene_name + ".csv")
 
 with open(results_filename, "w") as file: # Creates the file for writing
-    data = gene_name + "," + method + "," + str(results["NSsites"][2]["lnL"]) + '\n' # Adds the data as a second line
+    data = gene_name + "," + method + "," + str(lnL_result) + '\n' # Adds the data as a second line
     file.write(data) # Writes the log-likelihood to file
