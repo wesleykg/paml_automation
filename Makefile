@@ -1,20 +1,4 @@
-all: alternative null m1 results.csv
-
-branchsites2: alternative null results.csv
-
-branchsites1: alternative m1 results.csv
-
-branch: m0 nratios results.csv
-
-alternative: $(patsubst %.fasta, lnL_alternative_%.csv, $(wildcard *.fasta))
-
-null: $(patsubst %.fasta, lnL_null_%.csv, $(wildcard *.fasta))
-
-m1: $(patsubst %.fasta, lnL_m1_%.csv, $(wildcard *.fasta))
-
-m0: $(patsubst %.fasta, lnL_m0_%.csv, $(wildcard *.fasta))
-
-nratios: $(patsubst %.fasta, lnL_nratios_%.csv, $(wildcard *.fasta))
+all: $(patsubst %.fasta, lnL_%.csv, $(wildcard *.fasta))
 
 clean:
 	rm -drf results
@@ -24,25 +8,30 @@ clean:
 	mkdir -p results/$*
 	mv $@ results/$*
 
-lnL_alternative_%.csv: %.phy
+lnL_%.csv: %.phy
+ifeq ($(method),branchsites2)
 	mkdir results/$*/alternative
-	python ./scripts/02a_alternative.py $< *.tre
-
-lnL_null_%.csv: %.phy
+	python ./scripts/02_codeml.py $< *.tre alternative
 	mkdir results/$*/null
-	python ./scripts/02b_null.py $< *.tre
-
-lnL_m1_%.csv: %.phy
+	python ./scripts/02_codeml.py $< *.tre null
+else
+ifeq ($(method),branchsites1)
+	mkdir results/$*/alternative
+	python ./scripts/02_codeml.py $< *.tre alternative
 	mkdir results/$*/m1
-	python ./scripts/02c_m1.py $< *.tre
-
-lnL_m0_%.csv: %.phy
-	mkdir results/$*/m0
-	python ./scripts/02d_m0.py $< *.tre
-
-lnL_nratios_%.csv: %.phy
-	mkdir results/$*/nratios
-	python ./scripts/02e_nratios.py $< *.tre
+	python ./scripts/02_codeml.py $< *.tre m1
+else
+ifeq ($(method),branch)
+mkdir results/$*/m0
+python ./scripts/02_codeml.py $< *.tre m0
+mkdir results/$*/nratios
+python ./scripts/02_codeml.py $< *.tre nratios
+else
+	mkdir results/$*/$(method)
+	python ./scripts/02_codeml.py $< *.tre $(method)
+endif
+endif
+endif
 
 lnL_results = $(wildcard lnL_*.csv)
 
