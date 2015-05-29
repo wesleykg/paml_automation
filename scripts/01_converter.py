@@ -2,32 +2,34 @@ import re, tempfile, sys
 from Bio import AlignIO
 
 ## Prep the file for PAML by removing stop codons and standardizing gap characters
-with open(sys.argv[1], "r") as file: # Opens the file
-    data1 = file.read() # Reads the file into memory as a string
-    ## Stops the script if the FASTA file has space characters
-    if " " in data1:
-        sys.exit("*** YOUR FASTA FILE CONTAINS SPACES. PHYLIP DOESN'T ALLOW SPACES. ***\n*** PERHAPS TRY SWITCHING TO UNDERLINES? ***")
-    ## Checks to see if the file is Classic Mac formatted (\r)
-    ## and changes it to Unix formatted (\n) if it is
-    if "\r" in data1:
-        if "\n" not in data1:
-            data1 = data1.replace("\r", "\n")
-    data1 = re.sub("TAA(?=\n>|\n\Z)|TAG(?=\n>|\n\Z)|TGA(?=\n>|\n\Z)", "???", data1, flags = re.IGNORECASE) # Replaces stop codons with ???
-    data1 = data1.replace("~", "-") # Replaces all '~' with '-'
+def file_cleaner_converter(fasta_file):
+    with open(fasta_file, "r") as fasta_file: # Opens the file
+        fasta_data = fasta_file.read() # Reads the file into memory as a string
+        ## Stops the script if the FASTA file has space characters
+        if " " in fasta_data:
+            sys.exit("*** YOUR FASTA FILE CONTAINS SPACES. PHYLIP DOESN'T ALLOW SPACES. ***\n*** PERHAPS TRY SWITCHING TO UNDERLINES? ***")
+        ## Checks to see if the file is Classic Mac formatted (\r)
+        ## and changes it to Unix formatted (\n) if it is
+        if "\r" in fasta_data:
+            if "\n" not in fasta_data:
+                fasta_data = fasta_data.replace("\r", "\n")
+        fasta_data = re.sub("TAA(?=\n>|\n\Z)|TAG(?=\n>|\n\Z)|TGA(?=\n>|\n\Z)", "???", fasta_data, flags = re.IGNORECASE) # Replaces stop codons with ???
+        fasta_data = fasta_data.replace("~", "-") # Replaces all '~' with '-'
+        ## Writes fasta_data into a temporary file then converts the file into a relaxed interleaved phylip file
+        with tempfile.TemporaryFile() as temp_fasta: # Creates the tempfile and opens it
+            temp_fasta.write(fasta_data) # Writes the above changes into the tempfile
+            temp_fasta.seek(0) # Repositions the file reading frame of Python to the beginning
+            temp_fasta_AlignIO = AlignIO.read(temp_fasta, "fasta") # Reads the tempfile into AlignIO
+            AlignIO.write(temp_fasta_AlignIO, sys.argv[2], "phylip-relaxed") # Converts the tempfile
 
-## Writes the above changes into a temporary file then converts the file into a relaxed interleaved phylip file
-with tempfile.TemporaryFile() as temp: # Creates the tempfile and opens it
-    temp.write(data1) # Writes the above changes into the tempfile
-    temp.seek(0) # Repositions the file reading frame of Python to the beginning
-    temp = AlignIO.read(temp, "fasta") # Reads the tempfile into AlignIO
-    AlignIO.write(temp, sys.argv[2], "phylip-relaxed") # Converts the tempfile
+def paml_modifier(phylip_file):
+    with open(phylip_file, "r+") as phylip_file: # Opens the file
+        phylip_data = phylip_file.readlines() # Reads the file into memory as a list composed of each line
+        phylip_data[0] = phylip_data[0].rstrip("\r\n") # Removes newline characters from the first line
+        phylip_data[0] = phylip_data[0] + " I\n" # Adds an 'I' and a newline character to the first line
+        phylip_file.seek(0)
+        phylip_file.writelines(phylip_data) # Writes the above changes into the file
 
-## Adds the 'I' signifier to the file so PAML knows the file is interleaved
-with open(sys.argv[2], "r") as file: # Opens the file
-    data2 = file.readlines() # Reads the file into memory as a list composed of each line
-    data2[0] = data2[0].rstrip("\r\n") # Removes newline characters from the first line
-    data2[0] = data2[0] + " I\n" # Adds an 'I' and a newline character to the first line
-
-## Writes the above changes into the file
-with open(sys.argv[2], "w") as file:
-    file.writelines( data2 )
+if __name__ == '__main__':
+    file_cleaner_converter(sys.argv[1])
+    paml_modifier(sys.argv[2])
