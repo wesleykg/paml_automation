@@ -15,7 +15,7 @@ def file_cleaner_converter(fasta_file):
                 fasta_data = fasta_data.replace("\r\n", "\n")
             if "\n" not in fasta_data:
                 fasta_data = fasta_data.replace("\r", "\n")
-        fasta_data = re.sub("TAA(?=\n>|\n\Z)|TAG(?=\n>|\n\Z)|TGA(?=\n>|\n\Z)", "???", fasta_data, flags = re.IGNORECASE) # Replaces stop codons with ???
+        fasta_data = re.sub("TAA(?=\n>|\n\n|\n\Z)|TAG(?=\n>|\n\n|\n\Z)|TGA(?=\n>|\n\n|\n\Z)", "???", fasta_data, flags = re.IGNORECASE) # Replaces stop codons with ???
         fasta_data = fasta_data.replace("~", "-") # Replaces all '~' with '-'
         ## Writes fasta_data into a temporary file then converts the file into a relaxed interleaved phylip file
         with tempfile.TemporaryFile() as temp_fasta: # Creates the tempfile and opens it
