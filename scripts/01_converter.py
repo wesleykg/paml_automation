@@ -11,6 +11,8 @@ def file_cleaner_converter(fasta_file):
         ## Checks to see if the file is Classic Mac formatted (\r)
         ## and changes it to Unix formatted (\n) if it is
         if "\r" in fasta_data:
+            if "\n" in fasta_data:
+                fasta_data = fasta_data.replace("\r\n", "\n")
             if "\n" not in fasta_data:
                 fasta_data = fasta_data.replace("\r", "\n")
         fasta_data = re.sub("TAA(?=\n>|\n\Z)|TAG(?=\n>|\n\Z)|TGA(?=\n>|\n\Z)", "???", fasta_data, flags = re.IGNORECASE) # Replaces stop codons with ???
