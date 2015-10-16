@@ -24,7 +24,7 @@ else
 ifeq ($(method),both)
 	mkdir -p results/$*/alternative
 	python ./scripts/02_codeml.py $< *.tre alternative
-	mkdir -p results/$*/m1
+	mkdir -p results/$*/null
 	python ./scripts/02_codeml.py $< *.tre null
 	mkdir -p results/$*/m1
 	python ./scripts/02_codeml.py $< *.tre m1
