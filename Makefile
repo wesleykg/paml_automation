@@ -45,7 +45,7 @@ endif
 lnL_results = $(wildcard lnL_*.csv)
 
 results.csv: $(lnL_results)
-	find ./results -type f -mindepth 2 -wholename *.csv -exec cat {} \; > ./results/$@
+	find ./results -mindepth 2 -wholename *.csv -exec cat {} \; > ./results/$@
 
 .PHONY: all branchsites2 branchsites1 alternative null m1 clean
 .DELETE_ON_ERROR:
