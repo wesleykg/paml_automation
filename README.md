@@ -45,3 +45,4 @@ This set of scripts allows you to automate running codeml from PAML and in the f
 
 * Analyze results using R
 * Create a table with results
+A line I wrote on my mac-air
