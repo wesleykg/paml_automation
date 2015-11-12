@@ -1,13 +1,12 @@
 #paml_automation#
 ---
 
-This set of scripts allows you to automate running codeml from PAML and in the future analyze these results and put them into a table.
+This set of scripts allows you to automate running codeml from PAML It adds nothing new, and is simply an automation tool.
 
 ##Program Requirements##
 
 1. Python & Biopython
-3. R & dplyr
-4. GNU Make and base UNIX commands
+2. GNU Make and base UNIX commands
 
 ##Data Requirements##
 
