@@ -5,7 +5,7 @@ This set of scripts allows you to automate running codeml from PAML It adds noth
 
 ##Program Requirements##
 
-1. Python & Biopython
+1. Python2 & Biopython
 2. GNU Make and base UNIX commands
 
 ##Data Requirements##
@@ -44,5 +44,3 @@ This set of scripts allows you to automate running codeml from PAML It adds noth
 
 * Analyze results using R
 * Create a table with results
-A line I wrote on my mac-air
-A second line I wrote on my mac-air
