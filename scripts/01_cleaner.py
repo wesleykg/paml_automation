@@ -1,18 +1,25 @@
 import sys
+from Bio import AlignIO
 
-gene_file = sys.argv[1]
+alignment_file = sys.argv[1]
 
-def fasta_checker(gene_file):
-    '''Report common FASTA file problems'''
-    with open(gene_file, "r") as gene_file:
-        ##Check for spaces in gene names/identifiers
-        if " " in gene_file:
-            sys.exit("Can't read files with spaces in gene names/identifiers")
+def fasta_check_python(alignment_file):
+    '''Report common FASTA file problems using python libraries'''
+    with open(alignment_file, "r") as alignment:
+        for line in alignment:
             
-        ##Check for '~' in place of '-'
-        if '~' in gene_file:
-            sys.exit("Replace '~' chracters with '-' characters")
+            ##Check for spaces in gene names/identifiers
+            if " " in line:
+                sys.exit('''Can't read files with spaces 
+                            in gene names/identifier''')
+            
+            ##Check for '~' in place of '-'
+            if '~' in line:
+                sys.exit("Please replace '~' chracters with '-' characters.")
 
-     
+def fasta_check_biopython(alignment_file):
+    '''Report common FASTA file problems using Biopython libraries'''
+    
+
 if __name__ == '__main__':
-    fasta_checker(gene_file)
+    fasta_check_python(alignment_file)
