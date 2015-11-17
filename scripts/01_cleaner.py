@@ -10,21 +10,15 @@ args = parser.parse_args()
 alignment_file = args.alignment_path
 in_filetype = args.filetype
 
-def fasta_check_python(alignment_file):
-    '''Report common FASTA file problems using base python libraries'''
+def file_check(alignment_file, in_filetype):
+    '''Check for common FASTA file problems'''
     with open(alignment_file, 'r') as alignment:
         for line in alignment:
-            
             #Check for spaces in gene names/identifiers
             assert (" " not in line), 'Spaces in gene names/identifiers'
-            #Check for '~' in place of '-'
-            assert("~" not in line), "Invalid character '~'"
-                
-def fasta_check_biopython(alignment_file, in_filetype):
-    '''Report common FASTA file problems using Biopython libraries'''
+    
     alignment = AlignIO.read(alignment_file, in_filetype)
     for record in alignment:
-        
         #Checks that the genes are in reading frame for PAML (multiples of 3)
         assert (len(record.seq) % 3 == 0), 'Incorrect reading frame for PAML'
         
@@ -32,8 +26,7 @@ def fasta_check_biopython(alignment_file, in_filetype):
         assert (not record.seq.endswith(('TAA', 
                                         'TGA', 
                                         'TAG')) \
-                                        ), 'Stop codon present'
-
+                                        ), 'Stop codon(s) present'
+                
 if __name__ == '__main__':
-    fasta_check_python(alignment_file)
-    fasta_check_biopython(alignment_file, in_filetype)
+    file_check(alignment_file, in_filetype)
