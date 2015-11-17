@@ -1,28 +1,31 @@
-import sys
+import argparse
 from Bio import AlignIO
 
-alignment_file = sys.argv[1]
-in_filetype = 'fasta'
+parser = argparse.ArgumentParser()
+parser.add_argument('alignment_path', help = 'Path to the alignment file')
+parser.add_argument('-f', '--filetype', help = 'Select filetype', 
+                    default = 'fasta')
+args = parser.parse_args()
+
+alignment_file = args.alignment_path
+in_filetype = args.filetype
 
 def fasta_check_python(alignment_file):
     '''Report common FASTA file problems using base python libraries'''
-    with open(alignment_file, "r") as alignment:
+    with open(alignment_file, 'r') as alignment:
         for line in alignment:
             
             ##Check for spaces in gene names/identifiers
-            if " " in line:
-                sys.exit('''Can't read files with spaces 
-                            in gene names/identifier''')
-            
+            assert (" " not in line), 'Spaces in gene names/identifiers'
             ##Check for '~' in place of '-'
-            if '~' in line:
-                sys.exit("Please replace '~' chracters with '-' characters.")
-
+            assert("~" in line), "Invalid character '~'"
+                
 def fasta_check_biopython(alignment_file, in_filetype):
     '''Report common FASTA file problems using Biopython libraries'''
     alignment = AlignIO.read(alignment_file, in_filetype)
-    print(alignment)
-    
+    for record in alignment:
+        assert (len(record.seq) % 3 != 0), 'Incorrect reading frame'
+        
 
 if __name__ == '__main__':
     fasta_check_python(alignment_file)
