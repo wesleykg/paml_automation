@@ -23,6 +23,7 @@ def file_check(alignment_file, in_filetype):
         assert (len(record.seq) % 3 == 0), 'Incorrect reading frame for PAML'
         
         #Checks that genes don't end with stop codons
+        ##KNOWN BUG: CAN"T DEAL WITH LOWERCASE
         assert (not record.seq.endswith(('TAA', 
                                         'TGA', 
                                         'TAG')) \
