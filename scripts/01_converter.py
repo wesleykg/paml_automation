@@ -13,13 +13,18 @@ out_filetype = 'phylip-relaxed'
 
 def file_check(alignment_file, in_filetype):
     '''Check for common FASTA file problems'''
+    
+    #Base Python
     with open(alignment_file, 'r') as alignment:
         for line in alignment:
+            
             #Check for spaces in gene names/identifiers
             assert (" " not in line), 'Spaces in gene names/identifiers'
     
+    #Biopython
     alignment = AlignIO.read(alignment_file, in_filetype)
     for record in alignment:
+        
         #Checks that the genes are in reading frame for PAML (multiples of 3)
         assert (len(record.seq) % 3 == 0), 'Incorrect reading frame for PAML'
         
