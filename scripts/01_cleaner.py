@@ -15,17 +15,24 @@ def fasta_check_python(alignment_file):
     with open(alignment_file, 'r') as alignment:
         for line in alignment:
             
-            ##Check for spaces in gene names/identifiers
+            #Check for spaces in gene names/identifiers
             assert (" " not in line), 'Spaces in gene names/identifiers'
-            ##Check for '~' in place of '-'
+            #Check for '~' in place of '-'
             assert("~" not in line), "Invalid character '~'"
                 
 def fasta_check_biopython(alignment_file, in_filetype):
     '''Report common FASTA file problems using Biopython libraries'''
     alignment = AlignIO.read(alignment_file, in_filetype)
     for record in alignment:
-        assert (len(record.seq) % 3 == 0), 'Incorrect reading frame'
         
+        #Checks that the genes are in reading frame for PAML (multiples of 3)
+        assert (len(record.seq) % 3 == 0), 'Incorrect reading frame for PAML'
+        
+        #Checks that genes don't end with stop codons
+        assert (not record.seq.endswith(('TAA', 
+                                        'TGA', 
+                                        'TAG')) \
+                                        ), 'Stop codon present'
 
 if __name__ == '__main__':
     fasta_check_python(alignment_file)
