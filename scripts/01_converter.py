@@ -1,12 +1,14 @@
 import argparse
 from Bio import AlignIO
 
+#argparse module
 parser = argparse.ArgumentParser()
 parser.add_argument('alignment_path', help = 'Path to the alignment file')
 parser.add_argument('-f', '--filetype', help = 'Select filetype', 
                     default = 'fasta')
 args = parser.parse_args()
 
+#Variables
 alignment_file = args.alignment_path
 in_filetype = args.filetype
 out_filetype = 'phylip-relaxed'
