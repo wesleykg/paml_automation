@@ -2,6 +2,7 @@
 .Rhistory
 .RData
 .Rapp.history
+.spyderworkspace
 *.fasta
 *.fas
 *.fa
