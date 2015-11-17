@@ -28,6 +28,15 @@ def file_check(alignment_file, in_filetype):
                                         'TGA', 
                                         'TAG')) \
                                         ), 'Stop codon(s) present'
-                
+
+##INCOMPLETE; NOT WORKING
+def paml_modifier(alignment_file):
+    with open(alignment_file, "r+") as alignment_file: # Opens the file
+        alignment = alignment_file.readlines() # Reads the file into memory as a list composed of each line
+        alignment[0] = alignment[0].rstrip("\r\n") # Removes newline characters from the first line
+        alignment[0] = alignment[0] + " I\n" # Adds an 'I' and a newline character to the first line
+        alignment_file.seek(0)
+        alignment_file.writelines(alignment) # Writes the above changes into the file
+
 if __name__ == '__main__':
     file_check(alignment_file, in_filetype)
