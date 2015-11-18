@@ -1,15 +1,15 @@
-import argparse
+import argparse, os
 from Bio import AlignIO
 
 #argparse module
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser() # Initializes argparse
 parser.add_argument('alignment_path', help = 'Path to the alignment file')
 parser.add_argument('out_phyname', help = 'Name for the phylip file')
 parser.add_argument('-f', '--filetype', help = 'Specify the filetype', 
                     default = 'fasta')
-args = parser.parse_args()
+args = parser.parse_args() # Assigns all arguments to the 'args' object
 
-#Variables
+#Setting command-line arguments to variables
 in_alignment_file = args.alignment_path
 in_filetype = args.filetype
 
@@ -42,15 +42,16 @@ def file_check(in_alignment_file, in_filetype):
                                         ), 'Stop codon(s) present'
 
 def converter(in_alignment_file, in_filetype, out_phy_file, out_filetype):
+    '''Convert the alignment into phylip format for PAML'''
     AlignIO.convert(in_alignment_file, in_filetype, out_phy_file, out_filetype)
-##INCOMPLETE; NOT WORKING
-#def I_adder(in_alignment_file):
-#    with open(in_alignment_file, "r+") as in_alignment_file: # Opens the file
-#        alignment = in_alignment_file.readlines() # Reads the file into memory as a list composed of each line
-#        alignment[0] = alignment[0].rstrip("\r\n") # Removes newline characters from the first line
-#        alignment[0] = alignment[0] + " I\n" # Adds an 'I' and a newline character to the first line
-#        in_alignment_file.seek(0)
-#        in_alignment_file.writelines(alignment) # Writes the above changes into the file
+
+    #Adds an 'I' character to the first line for PAML    
+    with open(out_phy_file, "r+") as phy_file:
+        alignment = phy_file.readlines() #List comprising each line
+        alignment[0] = alignment[0].rstrip("\r\n") #Remove newline from line 1
+        alignment[0] = alignment[0] + " I\n" #Add 'I' and newline
+        phy_file.seek(0) #Go back to the start of the file
+        phy_file.writelines(alignment) #Rewrite the file
 
 if __name__ == '__main__':
     file_check(in_alignment_file, in_filetype)
