@@ -42,10 +42,7 @@ def file_check(in_alignment_file, in_filetype):
                                         ), 'Stop codon(s) present'
 
 def converter(in_alignment_file, in_filetype, out_phy_file, out_filetype):
-    print in_alignment_file
-    print in_filetype
-    print out_phy_file
-    print out_filetype
+    AlignIO.convert(in_alignment_file, in_filetype, out_phy_file, out_filetype)
 ##INCOMPLETE; NOT WORKING
 #def I_adder(in_alignment_file):
 #    with open(in_alignment_file, "r+") as in_alignment_file: # Opens the file
