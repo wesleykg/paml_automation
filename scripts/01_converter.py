@@ -1,4 +1,4 @@
-import argparse, os
+import argparse
 from Bio import AlignIO
 
 #argparse module
