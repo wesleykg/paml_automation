@@ -31,14 +31,14 @@ elif method == "nratios":
     NSsites = [0]
     fix_omega = 0
 
-## Initializes codeml module
+#codeml module
 cml = codeml.Codeml()
 cml.working_dir = os.path.join(working_dir, method)
 cml.alignment = os.path.join(working_dir, gene_file)
 cml.tree = os.path.join(project_dir, tree_file)
 cml.out_file = os.path.join(cml.working_dir, "mlc")
 
-## Sets codeml options
+##Sets codeml options
 #Specified above
 cml.set_options(model = model)
 cml.set_options(NSsites = NSsites)
@@ -69,9 +69,10 @@ cml.set_options(Mgene = 0)
 cml.set_options(kappa = 2)
 cml.set_options(ndata = 1)
 
-## Runs codeml
+#Runs codeml and stores the results
 results = cml.run(verbose = True)
 
+#Retrieves final lnL
 if method == "alternative":
     lnL_result = results["NSsites"][2]["lnL"]
 elif method == "null":
