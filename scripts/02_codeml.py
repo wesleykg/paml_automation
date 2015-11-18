@@ -39,9 +39,20 @@ cml.tree = os.path.join(project_dir, tree_file)
 cml.out_file = os.path.join(cml.working_dir, "mlc")
 
 ## Sets codeml options
-cml.set_options(CodonFreq = 2)
+#Specified above
+cml.set_options(model = model)
 cml.set_options(NSsites = NSsites)
 cml.set_options(fix_omega = fix_omega)
+
+#Change sometimes
+cml.set_options(cleandata = 0) #Change to remove gap columns
+cml.set_options(fix_blength = 0) #Modify starting point
+cml.set_options(getSE = 0)
+cml.set_options(RateAncestor = 0)
+cml.set_options(icode = 0) 
+
+#Change never
+cml.set_options(CodonFreq = 2)
 cml.set_options(clock = 0)
 cml.set_options(ncatG = 5)
 cml.set_options(runmode = 0)
@@ -50,19 +61,13 @@ cml.set_options(fix_alpha = 1)
 cml.set_options(Small_Diff = 5e-08)
 cml.set_options(method = 0)
 cml.set_options(Malpha = 0)
-cml.set_options(RateAncestor = 0)
-cml.set_options(icode = 0)
 cml.set_options(alpha = 0.0)
 cml.set_options(seqtype = 1)
 cml.set_options(omega = 1)
-cml.set_options(getSE = 0)
 cml.set_options(noisy = 9)
 cml.set_options(Mgene = 0)
 cml.set_options(kappa = 2)
-cml.set_options(model = model)
 cml.set_options(ndata = 1)
-cml.set_options(cleandata = 0)
-cml.set_options(fix_blength = 0)
 
 ## Runs codeml
 results = cml.run(verbose = True)
