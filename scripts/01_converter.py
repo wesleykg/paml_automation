@@ -7,7 +7,7 @@ parser.add_argument('alignment_path', help = 'Path to the alignment file')
 parser.add_argument('out_phyname', help = 'Name for the phylip file')
 parser.add_argument('-f', '--filetype', help = 'Specify the filetype', 
                     default = 'fasta')
-args = parser.parse_args() # Assigns all arguments to the 'args' object
+args, unknown = parser.parse_known_args() #Read valid arguments into 'args'
 
 #Setting command-line arguments to variables
 in_alignment_file = args.alignment_path
