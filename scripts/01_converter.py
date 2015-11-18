@@ -35,6 +35,7 @@ def file_check(in_alignment_file, in_filetype):
         
         #Checks that genes don't end with stop codons
         ##KNOWN BUG: CAN"T DEAL WITH LOWERCASE
+        ##FIX: Translate first, then check for '*' characters
         assert (not record.seq.endswith(('TAA', 
                                         'TGA', 
                                         'TAG')) \
