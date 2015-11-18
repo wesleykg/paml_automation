@@ -1,10 +1,17 @@
 from Bio.Phylo.PAML import codeml
-import sys, os
+import os, argparse
 
-gene_file = sys.argv[1] # Store the gene filename as a string
-gene_name = gene_file[:-4] # Removes the .phy suffix from the gene filename
-tree_file = sys.argv[2]
-method = sys.argv[3]
+#argparse module
+parser = argparse.ArgumentParser() #Initializes argparse
+parser.add_argument('alignment_path', help = 'Path to the alignment file')
+parser.add_argument('tree_path', help = 'Path to the tree file')
+parser.add_argument('model', help = 'Specify which model to test')
+args, unknown = parser.parse_known_args() #Read valid arguments into 'args'
+
+alignment = args.alignment_path # Store the gene filename as a string
+gene_name = alignment[:-4] # Removes the .phy suffix from the gene filename
+tree_file = args.tree_path
+method = args.model
 
 project_dir = os.getcwd() # Absolute path to the project directory
 gene_dir = os.path.join("results", gene_name) # Relative path to the gene directory
@@ -34,7 +41,7 @@ elif method == "nratios":
 #codeml module
 cml = codeml.Codeml()
 cml.working_dir = os.path.join(working_dir, method)
-cml.alignment = os.path.join(working_dir, gene_file)
+cml.alignment = os.path.join(working_dir, alignment)
 cml.tree = os.path.join(project_dir, tree_file)
 cml.out_file = os.path.join(cml.working_dir, "mlc")
 

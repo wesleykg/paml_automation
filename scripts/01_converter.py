@@ -2,7 +2,7 @@ import argparse
 from Bio import AlignIO
 
 #argparse module
-parser = argparse.ArgumentParser() # Initializes argparse
+parser = argparse.ArgumentParser() #Initializes argparse
 parser.add_argument('alignment_path', help = 'Path to the alignment file')
 parser.add_argument('out_phyname', help = 'Name for the phylip file')
 parser.add_argument('-f', '--filetype', help = 'Specify the filetype', 
