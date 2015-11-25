@@ -8,8 +8,9 @@ parser.add_argument('tree_path', help = 'Path to the tree file')
 parser.add_argument('model', help = 'Specify which model to test')
 args, unknown = parser.parse_known_args() #Read valid arguments into 'args'
 
-alignment = args.alignment_path # Store the gene filename as a string
-gene_name = alignment[:-4] # Removes the .phy suffix from the gene filename
+#Setting command-line arguments to variables
+alignment_file = args.alignment_path
+gene_name = alignment_file[:-4] #Filename without .phy suffix
 tree_file = args.tree_path
 method = args.model
 
@@ -41,7 +42,7 @@ elif method == "nratios":
 #codeml module
 cml = codeml.Codeml()
 cml.working_dir = os.path.join(working_dir, method)
-cml.alignment = os.path.join(working_dir, alignment)
+cml.alignment = os.path.join(working_dir, alignment_file)
 cml.tree = os.path.join(project_dir, tree_file)
 cml.out_file = os.path.join(cml.working_dir, "mlc")
 
