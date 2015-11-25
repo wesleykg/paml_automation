@@ -6,16 +6,29 @@ parser = argparse.ArgumentParser() #Initializes argparse
 parser.add_argument('alignment_path', help = 'Path to the alignment file')
 parser.add_argument('tree_path', help = 'Path to the tree file')
 parser.add_argument('model', help = 'Specify which model to test')
+parser.add_argument('-c', '--cleandata', help = 'Ignore gap-columns', 
+                    default = 0)
+parser.add_argument('-f', '--fix_blength', help = '''Modify initial likelihood 
+                    estimate''', default = 0)
+parser.add_argument('-SE', '--getSE', help = 'Test for standard errors', 
+                    default = 0)
+parser.add_argument('-a', '--RateAncestor', help = '''Test for rates and 
+                    ancestral sequences''', default = 0)
+parser.add_argument('-i', '--icode', help = '''Specify the genetic code for 
+                    ancestral state''', default = 0)
 args, unknown = parser.parse_known_args() #Read valid arguments into 'args'
 
-#Setting command-line arguments to variables
+##Set command-line arguments to variables
+#Alignment
 alignment_file = args.alignment_path
 gene_name = alignment_file[:-4] #Filename without .phy suffix
-tree_file = args.tree_path
-method = args.model
-
 alignment_dir = os.path.join('results/' + gene_name)
 
+#Tree
+tree_file = args.tree_path
+
+#Method
+method = args.model
 if method == "alternative":
     model = 2
     NSsites = [2]
@@ -37,6 +50,13 @@ elif method == "nratios":
     NSsites = [0]
     fix_omega = 0
 
+#Optionals
+cleandata = args.cleandata
+fix_blength = args.fix_blength
+getSE = args.getSE
+RateAncestor = args.RateAncestor
+icode = args.icode
+
 #codeml module
 cml = codeml.Codeml()
 cml.working_dir = os.path.join(alignment_dir, method)
@@ -45,19 +65,19 @@ cml.tree = tree_file
 cml.out_file = os.path.join(cml.working_dir, "mlc")
 
 ##Sets codeml options
-#Specified above
+#Model-specific
 cml.set_options(model = model)
 cml.set_options(NSsites = NSsites)
 cml.set_options(fix_omega = fix_omega)
 
-#Change sometimes
-cml.set_options(cleandata = 0) #Remove gap columns
-cml.set_options(fix_blength = 0) #Modify starting likelihood estimate
-cml.set_options(getSE = 0) #Print standard errors
-cml.set_options(RateAncestor = 0)
-cml.set_options(icode = 0) #Set genetic code
+#Optional settings
+cml.set_options(cleandata = cleandata)
+cml.set_options(fix_blength = fix_blength)
+cml.set_options(getSE = getSE)
+cml.set_options(RateAncestor = RateAncestor)
+cml.set_options(icode = icode)
 
-#Change never
+#Permanent settings
 cml.set_options(CodonFreq = 2)
 cml.set_options(clock = 0)
 cml.set_options(ncatG = 5)
