@@ -9,7 +9,7 @@ parser.add_argument('-f', '--filetype', help = 'Specify the filetype',
                     default = 'fasta')
 args, unknown = parser.parse_known_args() #Read valid arguments into 'args'
 
-#Setting command-line arguments to variables
+#Set command-line arguments to variables
 in_alignment_file = args.alignment_path
 in_filetype = args.filetype
 
