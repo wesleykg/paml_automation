@@ -53,11 +53,11 @@ cml.set_options(NSsites = NSsites)
 cml.set_options(fix_omega = fix_omega)
 
 #Change sometimes
-cml.set_options(cleandata = 0) #Change to remove gap columns
-cml.set_options(fix_blength = 0) #Modify starting point
-cml.set_options(getSE = 0)
+cml.set_options(cleandata = 0) #Remove gap columns
+cml.set_options(fix_blength = 0) #Modify starting likelihood estimate
+cml.set_options(getSE = 0) #Print standard errors
 cml.set_options(RateAncestor = 0)
-cml.set_options(icode = 0) 
+cml.set_options(icode = 0) #Set genetic code
 
 #Change never
 cml.set_options(CodonFreq = 2)
