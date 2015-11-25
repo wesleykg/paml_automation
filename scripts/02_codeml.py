@@ -14,9 +14,7 @@ gene_name = alignment_file[:-4] #Filename without .phy suffix
 tree_file = args.tree_path
 method = args.model
 
-project_dir = os.getcwd() # Absolute path to the project directory
-gene_dir = os.path.join("results", gene_name) # Relative path to the gene directory
-working_dir = os.path.join(project_dir, gene_dir) # Absolute path to the gene directory
+alignment_dir = os.path.join('results/' + gene_name)
 
 if method == "alternative":
     model = 2
@@ -41,9 +39,9 @@ elif method == "nratios":
 
 #codeml module
 cml = codeml.Codeml()
-cml.working_dir = os.path.join(working_dir, method)
-cml.alignment = os.path.join(working_dir, alignment_file)
-cml.tree = os.path.join(project_dir, tree_file)
+cml.working_dir = os.path.join(alignment_dir, method)
+cml.alignment = os.path.join(alignment_dir, alignment_file)
+cml.tree = tree_file
 cml.out_file = os.path.join(cml.working_dir, "mlc")
 
 ##Sets codeml options
@@ -93,7 +91,7 @@ elif method == "nratios":
     lnL_result = results["NSsites"][0]["lnL"]
 
 ## Stores the results_filename
-results_filename = os.path.join(working_dir, "lnL_" + method + "_" + gene_name + ".csv")
+results_filename = os.path.join(alignment_dir, "lnL_" + method + "_" + gene_name + ".csv")
 
 with open(results_filename, "w") as file: # Creates the file for writing
     data = gene_name + "," + method + "," + str(lnL_result) + '\n' # Adds the data as a second line
