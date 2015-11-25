@@ -8,8 +8,8 @@ parser.add_argument('tree_path', help = 'Path to the tree file')
 parser.add_argument('model', help = 'Specify which model to test')
 parser.add_argument('-c', '--cleandata', help = 'Ignore gap-columns', 
                     default = 0)
-parser.add_argument('-f', '--fix_blength', help = '''Modify initial likelihood 
-                    estimate''', default = 0)
+parser.add_argument('-f', '--fix_blength', help = '''Modify initial 
+                    likelihood estimate''', default = 0)
 parser.add_argument('-SE', '--getSE', help = 'Test for standard errors', 
                     default = 0)
 parser.add_argument('-a', '--RateAncestor', help = '''Test for rates and 
@@ -98,7 +98,7 @@ cml.set_options(ndata = 1)
 #Runs codeml and stores the results
 results = cml.run(verbose = True)
 
-#Retrieves final lnL
+#Retrieves results
 if method == "alternative":
     lnL_result = results["NSsites"][2]["lnL"]
 elif method == "null":
@@ -110,9 +110,10 @@ elif method == "m0":
 elif method == "nratios":
     lnL_result = results["NSsites"][0]["lnL"]
 
-## Stores the results_filename
-results_filename = os.path.join(alignment_dir, "lnL_" + method + "_" + gene_name + ".csv")
+results_filename = os.path.join(alignment_dir, method + 
+                                "_" + gene_name + ".csv")
+                                
+codeml_data = gene_name + "," + method + "," + str(lnL_result) + '\n'
 
-with open(results_filename, "w") as file: # Creates the file for writing
-    data = gene_name + "," + method + "," + str(lnL_result) + '\n' # Adds the data as a second line
-    file.write(data) # Writes the log-likelihood to file
+with open(results_filename, "w") as lnL_file:
+    lnL_file.write(codeml_data)
