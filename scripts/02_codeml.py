@@ -101,25 +101,36 @@ results = cml.run(verbose = False)
 #Retrieves results
 NSsites_dict = results.get('NSsites')
 if method == "alternative":
-    alternative_dict = NSsites_dict.get(2)
-    lnL_value = alternative_dict.get('lnL')
+    model_dict = NSsites_dict.get(2)
+    lnL_value = model_dict.get('lnL')
+    codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + '\n'
 elif method == "null":
-    null_dict = NSsites_dict.get(2)
-    lnL_value = null_dict.get('lnL')
+    model_dict = NSsites_dict.get(2)
+    lnL_value = model_dict.get('lnL')
+    codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + '\n'
 elif method == "m1":
-    m1_dict = NSsites_dict.get(1)
-    lnL_value = m1_dict.get('lnL')
+    model_dict = NSsites_dict.get(1)
+    lnL_value = model_dict.get('lnL')
+    codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + '\n'
 elif method == "m0":
-    m0_dict = NSsites_dict.get(0)
-    lnL_value = m0_dict.get('lnL')
+    model_dict = NSsites_dict.get(0)
+    lnL_value = model_dict.get('lnL')
+    param_dict = model_dict.get('parameters')
+    bg_omega_value = param_dict.get('omega')
+    codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + ',' + \
+                    str(bg_omega_value) + '\n'
 elif method == "nratios":
-    nratios_dict = NSsites_dict.get(0)
-    lnL_value = nratios_dict.get('lnL')
+    model_dict = NSsites_dict.get(0)
+    lnL_value = model_dict.get('lnL')
+    param_dict = model_dict.get('parameters')
+    omega_values = param_dict.get('omega')
+    bg_omega_value = omega_values[0]
+    fg_omega_value = omega_values[1]
+    codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + ',' + \
+    str(bg_omega_value) + ',' + str(fg_omega_value) + '\n'
 
 results_filename = os.path.join(alignment_dir, method + 
                                 "_" + gene_name + ".csv")
-                                
-codeml_data = gene_name + "," + method + "," + str(lnL_value) + '\n'
 
 with open(results_filename, "w") as lnL_file:
     lnL_file.write(codeml_data)
