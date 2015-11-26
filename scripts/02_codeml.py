@@ -96,24 +96,30 @@ cml.set_options(kappa = 2)
 cml.set_options(ndata = 1)
 
 #Runs codeml and stores the results
-results = cml.run(verbose = True)
+results = cml.run(verbose = False)
 
 #Retrieves results
+NSsites_dict = results.get('NSsites')
 if method == "alternative":
-    lnL_result = results["NSsites"][2]["lnL"]
+    alternative_dict = NSsites_dict.get(2)
+    lnL_value = alternative_dict.get('lnL')
 elif method == "null":
-    lnL_result = results["NSsites"][2]["lnL"]
+    null_dict = NSsites_dict.get(2)
+    lnL_value = null_dict.get('lnL')
 elif method == "m1":
-    lnL_result = results["NSsites"][1]["lnL"]
+    m1_dict = NSsites_dict.get(1)
+    lnL_value = m1_dict.get('lnL')
 elif method == "m0":
-    lnL_result = results["NSsites"][0]["lnL"]
+    m0_dict = NSsites_dict.get(0)
+    lnL_value = m0_dict.get('lnL')
 elif method == "nratios":
-    lnL_result = results["NSsites"][0]["lnL"]
+    nratios_dict = NSsites_dict.get(0)
+    lnL_value = nratios_dict.get('lnL')
 
 results_filename = os.path.join(alignment_dir, method + 
                                 "_" + gene_name + ".csv")
                                 
-codeml_data = gene_name + "," + method + "," + str(lnL_result) + '\n'
+codeml_data = gene_name + "," + method + "," + str(lnL_value) + '\n'
 
 with open(results_filename, "w") as lnL_file:
     lnL_file.write(codeml_data)
