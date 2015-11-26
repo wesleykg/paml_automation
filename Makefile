@@ -1,4 +1,4 @@
-all: $(patsubst %.fasta, lnL_%.csv, $(wildcard *.fasta)) results.csv
+all: $(patsubst %.fasta, $(method)_%.csv, $(wildcard *.fasta)) results.csv
 
 clean:
 	rm -drf results
@@ -8,7 +8,7 @@ clean:
 	mkdir -p results/$*
 	mv $@ results/$*
 
-lnL_%.csv: %.phy
+$(method)_%.csv: %.phy
 ifeq ($(method),branchsites2)
 	mkdir results/$*/alternative
 	python ./scripts/02_codeml.py $< *.tre alternative
@@ -42,9 +42,9 @@ endif
 endif
 endif
 
-lnL_results = $(wildcard lnL_*.csv)
+results = $(wildcard $(method)_*.csv)
 
-results.csv: $(lnL_results)
+results.csv: $(results)
 	find ./results -mindepth 2 -wholename *.csv -exec cat {} \; > ./results/$@
 
 .PHONY: all clean
