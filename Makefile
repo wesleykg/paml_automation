@@ -1,4 +1,4 @@
-all: $(patsubst %.fasta, $(method)_%.csv, $(wildcard *.fasta)) results.csv
+all: $(patsubst %.fasta, $(method)_%.csv, $(wildcard *.fasta))
 
 clean:
 	rm -drf results

@@ -96,7 +96,7 @@ cml.set_options(kappa = 2)
 cml.set_options(ndata = 1)
 
 #Runs codeml and stores the results
-results = cml.run(verbose = False)
+results = cml.run(verbose = True)
 
 #Retrieves results
 NSsites_dict = results.get('NSsites')
