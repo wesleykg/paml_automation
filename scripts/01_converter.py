@@ -18,15 +18,17 @@ if in_ipython() is False:
     cmdln_args = docopt(__doc__)
     in_alignment_file = cmdln_args.get('<alignment_path>')
     out_phy_file = cmdln_args.get('<out_phy_name>')
-    in_filetype = 'fasta'
 # Run interatively in an iPython console
 if in_ipython() is True:
     in_alignment_file = 'cpSECA2_1865_aligned_paml.fasta'
-    in_filetype = 'fasta'
-    out_alignment_file = cmdln_args.get('cpSECA2_1865_aligned_paml.phy')
+    out_alignment_file = 'cpSECA2_1865_aligned_paml.phy'
+
+alignment_name = os.path.splitext(in_alignment_file)[0]
+filetype = os.path.splitext(in_alignment_file)[1]
+filetype = filetype[1:]  # remove the '.' of the file type
 
 
-def file_check(in_alignment_file, in_filetype):
+def file_check(in_alignment_file, filetype):
     '''Check for common FASTA file problems'''
 
     # Check for problems using Base Python
@@ -37,7 +39,7 @@ def file_check(in_alignment_file, in_filetype):
             assert (" " not in line), 'Spaces in gene names/identifiers'
 
     # Check for problems using Biopython
-    alignment = AlignIO.read(in_alignment_file, in_filetype)
+    alignment = AlignIO.read(in_alignment_file, filetype)
     for record in alignment:
 
         # Checks that the genes are in reading frame for PAML (multiples of 3)
@@ -50,11 +52,11 @@ def file_check(in_alignment_file, in_filetype):
             'Stop codon(s) present'
 
 
-def converter(in_alignment_file, in_filetype, out_phy_file):
-    '''Convert the alignment into phylip format for PAML'''
+def converter(in_alignment_file, filetype, out_phy_file):
+    '''Convert the alignment into PAML phylip format'''
 
     # Converts the file
-    AlignIO.convert(in_alignment_file, in_filetype, out_phy_file,
+    AlignIO.convert(in_alignment_file, filetype, out_phy_file,
                     'phylip-relaxed')
 
     # Adds an 'I' character to the first line for PAML
@@ -66,5 +68,5 @@ def converter(in_alignment_file, in_filetype, out_phy_file):
         phy_file.writelines(alignment)  # Rewrite the file
 
 if __name__ == '__main__':
-    file_check(in_alignment_file, in_filetype)
-    converter(in_alignment_file, in_filetype, out_phy_file)
+    file_check(in_alignment_file, filetype)
+    converter(in_alignment_file, filetype, out_phy_file)
