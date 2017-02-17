@@ -1,6 +1,7 @@
 '''Usage: 01_converter.py <alignment_path> <out_phy_name>'''
 
-from Bio import AlignIO
+import os  # Manipulating filenames
+from Bio import AlignIO  # Converting alignments
 
 
 # Check if running interactively in an iPython console, or in a script
@@ -22,9 +23,7 @@ if in_ipython() is False:
 if in_ipython() is True:
     in_alignment_file = 'cpSECA2_1865_aligned_paml.fasta'
     in_filetype = 'fasta'
-    out_phy_file = cmdln_args.get('cpSECA2_1865_aligned_paml.phy')
-
-out_filetype = 'phylip-relaxed'
+    out_alignment_file = cmdln_args.get('cpSECA2_1865_aligned_paml.phy')
 
 
 def file_check(in_alignment_file, in_filetype):
@@ -51,11 +50,12 @@ def file_check(in_alignment_file, in_filetype):
             'Stop codon(s) present'
 
 
-def converter(in_alignment_file, in_filetype, out_phy_file, out_filetype):
+def converter(in_alignment_file, in_filetype, out_phy_file):
     '''Convert the alignment into phylip format for PAML'''
 
     # Converts the file
-    AlignIO.convert(in_alignment_file, in_filetype, out_phy_file, out_filetype)
+    AlignIO.convert(in_alignment_file, in_filetype, out_phy_file,
+                    'phylip-relaxed')
 
     # Adds an 'I' character to the first line for PAML
     with open(out_phy_file, "r+") as phy_file:
@@ -67,4 +67,4 @@ def converter(in_alignment_file, in_filetype, out_phy_file, out_filetype):
 
 if __name__ == '__main__':
     file_check(in_alignment_file, in_filetype)
-    converter(in_alignment_file, in_filetype, out_phy_file, out_filetype)
+    converter(in_alignment_file, in_filetype, out_phy_file)
