@@ -20,10 +20,10 @@ if in_ipython() is False:
     out_phy_file = cmdln_args.get('<out_phy_name>')
 # Run interatively in an iPython console
 if in_ipython() is True:
-    in_alignment_file = 'cpSECA2_1865_aligned_paml.fasta'
-    out_alignment_file = 'cpSECA2_1865_aligned_paml.phy'
+    in_alignment_file = '../cpSECA2_1865_aligned_paml.fasta'
 
 alignment_name = os.path.splitext(in_alignment_file)[0]
+out_alignment_name = alignment_name + '.phy'
 filetype = os.path.splitext(in_alignment_file)[1]
 filetype = filetype[1:]  # remove the '.' of the file type
 
@@ -52,15 +52,15 @@ def file_check(in_alignment_file, filetype):
             'Stop codon(s) present'
 
 
-def converter(in_alignment_file, filetype, out_phy_file):
+def converter(in_alignment_file, filetype, out_alignment_name):
     '''Convert the alignment into PAML phylip format'''
 
     # Converts the file
-    AlignIO.convert(in_alignment_file, filetype, out_phy_file,
+    AlignIO.convert(in_alignment_file, filetype, out_alignment_name,
                     'phylip-relaxed')
 
     # Adds an 'I' character to the first line for PAML
-    with open(out_phy_file, "r+") as phy_file:
+    with open(out_alignment_name, "r+") as phy_file:
         alignment = phy_file.readlines()  # List comprising each line
         alignment[0] = alignment[0].rstrip("\r\n")  # Remove first newline
         alignment[0] = alignment[0] + " I\n"  # Add 'I' and newline
@@ -69,4 +69,4 @@ def converter(in_alignment_file, filetype, out_phy_file):
 
 if __name__ == '__main__':
     file_check(in_alignment_file, filetype)
-    converter(in_alignment_file, filetype, out_phy_file)
+    converter(in_alignment_file, filetype, out_alignment_name)
