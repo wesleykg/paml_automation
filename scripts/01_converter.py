@@ -1,6 +1,5 @@
 '''Usage: 01_converter.py <alignment_path> <out_phy_name>'''
 
-import argparse
 from Bio import AlignIO
 
 
@@ -25,19 +24,6 @@ if in_ipython() is True:
     in_filetype = 'fasta'
     out_phy_file = cmdln_args.get('cpSECA2_1865_aligned_paml.phy')
 
-## argparse module
-#parser = argparse.ArgumentParser()  # Initializes argparse
-#parser.add_argument('alignment_path', help='Path to the alignment file')
-#parser.add_argument('out_phyname', help='Name for the phylip file')
-#parser.add_argument('-f', '--filetype', help='Specify the filetype',
-#                    default='fasta')
-#args, unknown = parser.parse_known_args()  # Read valid arguments into 'args'
-#
-## Set command-line arguments to variables
-#in_alignment_file = args.alignment_path
-#in_filetype = args.filetype
-#
-#out_phy_file = args.out_phyname
 out_filetype = 'phylip-relaxed'
 
 
