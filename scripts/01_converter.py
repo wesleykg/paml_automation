@@ -1,4 +1,4 @@
-'''Usage: 01_converter.py <alignment_path> <out_phy_name>'''
+'''Usage: 01_converter.py <alignment_path>'''
 
 import os  # Manipulating filenames
 from Bio import AlignIO  # Converting alignments
@@ -17,7 +17,6 @@ if in_ipython() is False:
     from docopt import docopt  # Command-line argument handler
     cmdln_args = docopt(__doc__)
     in_alignment_file = cmdln_args.get('<alignment_path>')
-    out_phy_file = cmdln_args.get('<out_phy_name>')
 # Run interatively in an iPython console
 if in_ipython() is True:
     in_alignment_file = '../cpSECA2_1865_aligned_paml.fasta'

@@ -4,7 +4,7 @@ clean:
 	rm -drf results
 
 %.phy: %.fasta
-	python ./scripts/01_converter.py $< $@
+	python ./scripts/01_converter.py $<
 	mkdir -p results/$*
 	mv $@ results/$*
 
