@@ -27,17 +27,19 @@ filetype = os.path.splitext(in_alignment_file)[1]
 filetype = filetype[1:]  # remove the '.' of the file type
 
 # Check for problems using Base Python
-with open(in_alignment_file, 'r') as alignment:
-    for line in alignment:
+#with open(in_alignment_file, 'r') as alignment:
+#    for line in alignment:
 
         # Check for spaces in gene names/identifiers
-        assert (" " not in line), 'Spaces in gene names/identifiers'
+        #assert (" " not in line), 'Spaces in gene names/identifiers'
 
 # Check for problems using Biopython
 alignment = AlignIO.read(in_alignment_file, filetype)
 for record in alignment:
 
-    # Checks that the genes are in reading frame for PAML (multiples of 3)
+    assert (len(record.seq) < 51), 'One or more species names are too long'
+
+    #Checks that the genes are in reading frame for PAML (multiples of 3)
     assert (len(record.seq) % 3 == 0), 'Incorrect reading frame for PAML'
 
     # Checks that genes don't end with stop codons
