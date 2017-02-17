@@ -26,26 +26,19 @@ out_alignment_filename = alignment_name + '.phy'
 filetype = os.path.splitext(in_alignment_file)[1]
 filetype = filetype[1:]  # remove the '.' of the file type
 
-# Check for problems using Base Python
-#with open(in_alignment_file, 'r') as alignment:
-#    for line in alignment:
-
-        # Check for spaces in gene names/identifiers
-        #assert (" " not in line), 'Spaces in gene names/identifiers'
-
-# Check for problems using Biopython
+# Check for PAML input problems
 alignment = AlignIO.read(in_alignment_file, filetype)
 for record in alignment:
 
-    assert (len(record.seq) < 51), 'One or more species names are too long'
+    # Check for species names longer than 50 characters
+    assert (len(record.id) < 51), 'One or more species names are too long'
 
-    #Checks that the genes are in reading frame for PAML (multiples of 3)
-    assert (len(record.seq) % 3 == 0), 'Incorrect reading frame for PAML'
+    # Checks that the genes are in the correct reading frame
+    assert (len(record.seq) % 3 == 0), 'Reading frame must be a multiple of 3'
 
-    # Checks that genes don't end with stop codons
-    # KNOWN BUG: CAN"T DEAL WITH LOWERCASE
-    # FIX: Translate first, then check for '*' characters
-    assert (not record.seq.endswith(('TAA', 'TGA', 'TAG'))), \
+    # Checks for stop codons
+    assert (not record.seq.endswith(
+            ('TAA', 'taa', 'TGA', 'tga', 'TAG', 'tag'))), \
         'Stop codon(s) present'
 
 # Converts the file
