@@ -1,19 +1,43 @@
+'''Usage: 01_converter.py <alignment_path> <out_phy_name>'''
+
 import argparse
 from Bio import AlignIO
 
-# argparse module
-parser = argparse.ArgumentParser()  # Initializes argparse
-parser.add_argument('alignment_path', help='Path to the alignment file')
-parser.add_argument('out_phyname', help='Name for the phylip file')
-parser.add_argument('-f', '--filetype', help='Specify the filetype',
-                    default='fasta')
-args, unknown = parser.parse_known_args()  # Read valid arguments into 'args'
 
-# Set command-line arguments to variables
-in_alignment_file = args.alignment_path
-in_filetype = args.filetype
+# Check if running interactively in an iPython console, or in a script
+# from the command-line
+def in_ipython():
+    try:
+        __IPYTHON__
+        return True
+    except NameError:
+        return False
+# Run in a script from the command-line
+if in_ipython() is False:
+    from docopt import docopt  # Command-line argument handler
+    cmdln_args = docopt(__doc__)
+    in_alignment_file = cmdln_args.get('<alignment_path>')
+    out_phy_file = cmdln_args.get('<out_phy_name>')
+    in_filetype = 'fasta'
+# Run interatively in an iPython console
+if in_ipython() is True:
+    in_alignment_file = 'cpSECA2_1865_aligned_paml.fasta'
+    in_filetype = 'fasta'
+    out_phy_file = cmdln_args.get('cpSECA2_1865_aligned_paml.phy')
 
-out_phy_file = args.out_phyname
+## argparse module
+#parser = argparse.ArgumentParser()  # Initializes argparse
+#parser.add_argument('alignment_path', help='Path to the alignment file')
+#parser.add_argument('out_phyname', help='Name for the phylip file')
+#parser.add_argument('-f', '--filetype', help='Specify the filetype',
+#                    default='fasta')
+#args, unknown = parser.parse_known_args()  # Read valid arguments into 'args'
+#
+## Set command-line arguments to variables
+#in_alignment_file = args.alignment_path
+#in_filetype = args.filetype
+#
+#out_phy_file = args.out_phyname
 out_filetype = 'phylip-relaxed'
 
 
