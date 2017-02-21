@@ -21,6 +21,8 @@ if in_ipython() is False:
 if in_ipython() is True:
     in_alignment_file = '../cpSECA2_1865_aligned_paml.fasta'
 
+# Retrieves filename to produce the name for the converted alignment and the
+# filetype
 alignment_name = os.path.splitext(in_alignment_file)[0]
 out_alignment_filename = alignment_name + '.phy'
 filetype = os.path.splitext(in_alignment_file)[1]
@@ -42,7 +44,7 @@ multiple of 3, your alignment is in an incorrect reading frame'
             ('TAA', 'taa', 'TGA', 'tga', 'TAG', 'tag'))), \
         'Stop codon(s) present'
 
-# Converts the file
+# Converts the file into an interleaved phylip file.
 AlignIO.convert(in_alignment_file, filetype, out_alignment_filename,
                 'phylip-relaxed')
 
