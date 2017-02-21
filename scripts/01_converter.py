@@ -34,7 +34,8 @@ for record in alignment:
     assert (len(record.id) < 51), 'One or more species names are too long'
 
     # Checks that the genes are in the correct reading frame
-    assert (len(record.seq) % 3 == 0), 'Reading frame must be a multiple of 3'
+    assert (len(record.seq) % 3 == 0), 'Bases in the alignment must be a \
+multiple of 3, your alignment is in an incorrect reading frame'
 
     # Checks for stop codons
     assert (not record.seq.endswith(
@@ -45,10 +46,11 @@ for record in alignment:
 AlignIO.convert(in_alignment_file, filetype, out_alignment_filename,
                 'phylip-relaxed')
 
-# Adds an 'I' character to the first line for PAML
+# Adds an 'I' character to the first line for PAML. This indicates to PAML that
+# the alignment is interleaved.
 with open(out_alignment_filename, "r+") as phy_file:
     alignment = phy_file.readlines()  # List comprising each line
     alignment[0] = alignment[0].rstrip("\r\n")  # Remove first newline
-    alignment[0] = alignment[0] + " I\n"  # Add 'I' and newline
+    alignment[0] = alignment[0] + " I\n"  # Add 'I' and a newline character
     phy_file.seek(0)  # Go back to the start of the file
     phy_file.writelines(alignment)  # Rewrite the file
