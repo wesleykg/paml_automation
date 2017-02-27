@@ -19,7 +19,7 @@ if in_ipython() is False:
     in_alignment_file = cmdln_args.get('<alignment>')
 # Run interatively in an iPython console
 if in_ipython() is True:
-    in_alignment_file = '../cpSECA2_1865_aligned_paml.fasta'
+    in_alignment_file = '../ALB4_3968_aligned.fasta'
 
 # Retrieves filename to produce the name for the converted alignment and the
 # filetype

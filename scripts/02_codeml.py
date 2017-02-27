@@ -1,35 +1,38 @@
+'''Usage: 02_codeml.py <alignment> <tree> <method> [<clean_data>] \
+[<fix_blength>]'''
+
 from Bio.Phylo.PAML import codeml
 import os
-import argparse
 
-# argparse module
-parser = argparse.ArgumentParser()  # Initializes argparse
-parser.add_argument('alignment_path', help='Path to the alignment file')
-parser.add_argument('tree_path', help='Path to the tree file')
-parser.add_argument('model', help='Specify which model to test')
-parser.add_argument('-c', '--cleandata', help='Ignore gap-columns',
-                    default=0)
-parser.add_argument('-f', '--fix_blength', help='''Modify initial
-                    likelihood estimate''', default=0)
-parser.add_argument('-SE', '--getSE', help='Test for standard errors',
-                    default=0)
-parser.add_argument('-a', '--RateAncestor', help='''Test for rates and
-                    ancestral sequences''', default=0)
-parser.add_argument('-i', '--icode', help='''Specify the genetic code for
-                    ancestral state''', default=0)
-args, unknown = parser.parse_known_args()  # Read valid arguments into 'args'
 
-# Set command-line arguments to variables:
-# 1. Alignment
-alignment_file = args.alignment_path
-gene_name = alignment_file[:-4]  # Filename without .phy suffix
-alignment_dir = os.path.join('results/' + gene_name)
+# Check if running interactively in an iPython console, or in a script
+# from the command-line
+def in_ipython():
+    try:
+        __IPYTHON__
+        return True
+    except NameError:
+        return False
+# Run in a script from the command-line
+if in_ipython() is False:
+    from docopt import docopt  # Command-line argument handler
+    cmdln_args = docopt(__doc__)
+    alignment_file = cmdln_args.get('<alignment>')
+    tree_file = cmdln_args.get('<tree>')
+    method = cmdln_args.get('<method>')
+    clean_data = cmdln_args.get('[<clean_data>]')
+    fix_blength = clean_data = cmdln_args.get('[<fix_blength>]')
+# Run interatively in an iPython console
+if in_ipython() is True:
+    alignment_file = 'ALB4_3968_aligned.phy'
+    tree_file = '../RAxML_bestTree.ALB4_3968_aligned_ML_2017-01-31.tre'
+    method = 'm0'
+    clean_data = 0
+    fix_blength = 0
 
-# 2. Tree
-tree_file = args.tree_path
+gene_name = os.path.splitext(alignment_file)[0]  # Filename without .phy suffix
+alignment_dir = os.path.join('../results/' + gene_name)
 
-# 3. Method
-method = args.model
 if method == "alternative":
     model = 2
     NSsites = [2]
@@ -51,13 +54,6 @@ elif method == "nratios":
     NSsites = [0]
     fix_omega = 0
 
-# Optionals
-cleandata = args.cleandata
-fix_blength = args.fix_blength
-getSE = args.getSE
-RateAncestor = args.RateAncestor
-icode = args.icode
-
 # codeml module
 cml = codeml.Codeml()
 cml.working_dir = os.path.join(alignment_dir, method)
@@ -72,13 +68,13 @@ cml.set_options(NSsites=NSsites)
 cml.set_options(fix_omega=fix_omega)
 
 # 2. Optional settings
-cml.set_options(cleandata=cleandata)
+cml.set_options(cleandata=clean_data)
 cml.set_options(fix_blength=fix_blength)
-cml.set_options(getSE=getSE)
-cml.set_options(RateAncestor=RateAncestor)
-cml.set_options(icode=icode)
 
 # 3. Permanent settings
+cml.set_options(getSE=0)
+cml.set_options(RateAncestor=0)
+cml.set_options(icode=0)
 cml.set_options(CodonFreq=2)
 cml.set_options(clock=0)
 cml.set_options(ncatG=5)
