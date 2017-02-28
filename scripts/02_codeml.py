@@ -1,5 +1,4 @@
-'''Usage: 02_codeml.py <alignment> <tree> <method> [<clean_data>] \
-[<fix_blength>]'''
+'''Usage: 02_codeml.py [--clean_data=<NUMBER>] [--fix_blength=<NUMBER>] <alignment> <tree> <method>'''
 
 from Bio.Phylo.PAML import codeml
 import os
@@ -20,18 +19,18 @@ if in_ipython() is False:
     alignment_file = cmdln_args.get('<alignment>')
     tree_file = cmdln_args.get('<tree>')
     method = cmdln_args.get('<method>')
-    clean_data = cmdln_args.get('[<clean_data>]')
-    fix_blength = clean_data = cmdln_args.get('[<fix_blength>]')
+    clean_data = cmdln_args.get('[--clean_data=NUMBER]')
+    fix_blength = cmdln_args.get('[--fix_blength=NUMBER]')
 # Run interatively in an iPython console
 if in_ipython() is True:
-    alignment_file = 'ALB4_3968_aligned.phy'
-    tree_file = '../RAxML_bestTree.ALB4_3968_aligned_ML_2017-01-31.tre'
+    alignment_file = 'cpSECA2_1865_aligned_paml.phy'
+    tree_file = '../RAxML_bestTree.cpSECA2_1865_aligned_ml_2017-02-07.tre'
     method = 'm0'
     clean_data = 0
     fix_blength = 0
 
 gene_name = os.path.splitext(alignment_file)[0]  # Filename without .phy suffix
-alignment_dir = os.path.join('../results/' + gene_name)
+alignment_dir = os.path.join('results/' + gene_name)
 
 if method == "alternative":
     model = 2
@@ -69,6 +68,7 @@ cml.set_options(fix_omega=fix_omega)
 
 # 2. Optional settings
 cml.set_options(cleandata=clean_data)
+print "Optional blength chosen:", fix_blength
 cml.set_options(fix_blength=fix_blength)
 
 # 3. Permanent settings

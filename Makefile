@@ -11,7 +11,7 @@ clean:
 $(method)_%.csv: %.phy
 ifeq ($(method),branchsites2)
 	mkdir results/$*/alternative
-	python ./scripts/02_codeml.py $< *.tre alternative
+	python ./scripts/02_codeml.py $< *.tre alternative 
 	mkdir results/$*/null
 	python ./scripts/02_codeml.py $< *.tre null
 else
@@ -31,7 +31,7 @@ ifeq ($(method),both)
 else
 ifeq ($(method),branch)
 	mkdir -p results/$*/m0
-	python ./scripts/02_codeml.py $< *.tre m0
+	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=1 $< *.tre m0
 	mkdir -p results/$*/nratios
 	python ./scripts/02_codeml.py $< *.tre nratios
 else
