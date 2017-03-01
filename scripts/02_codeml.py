@@ -1,4 +1,5 @@
-'''Usage: 02_codeml.py [--clean_data=<NUMBER>] [--fix_blength=<NUMBER>] <alignment> <tree> <method>'''
+'''Usage: 02_codeml.py [--clean_data=<NUMBER>] [--fix_blength=<NUMBER>] \
+<alignment> <tree> <method>'''
 
 from Bio.Phylo.PAML import codeml
 import os
@@ -19,13 +20,13 @@ if in_ipython() is False:
     alignment_file = cmdln_args.get('<alignment>')
     tree_file = cmdln_args.get('<tree>')
     method = cmdln_args.get('<method>')
-    clean_data = cmdln_args.get('[--clean_data=NUMBER]')
-    fix_blength = cmdln_args.get('[--fix_blength=NUMBER]')
+    clean_data = cmdln_args.get('--clean_data')
+    fix_blength = cmdln_args.get('--fix_blength')
 # Run interatively in an iPython console
 if in_ipython() is True:
-    alignment_file = 'cpSECA2_1865_aligned_paml.phy'
-    tree_file = '../RAxML_bestTree.cpSECA2_1865_aligned_ml_2017-02-07.tre'
-    method = 'm0'
+    alignment_file = 'rps19.phy'
+    tree_file = 'whole_gene_tree.tre'
+    method = 'alternative'
     clean_data = 0
     fix_blength = 0
 
@@ -68,7 +69,6 @@ cml.set_options(fix_omega=fix_omega)
 
 # 2. Optional settings
 cml.set_options(cleandata=clean_data)
-print "Optional blength chosen:", fix_blength
 cml.set_options(fix_blength=fix_blength)
 
 # 3. Permanent settings
@@ -100,6 +100,9 @@ NSsites_dict = results.get('NSsites')
 if method == "alternative":
     model_dict = NSsites_dict.get(2)
     lnL_value = model_dict.get('lnL')
+    param_dict = model_dict.get('parameters')
+    site_classes_dict = param_dict.get()
+    print "This the site_classes dictionary:", site_classes_dict
     codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + '\n'
 elif method == "null":
     model_dict = NSsites_dict.get(2)
