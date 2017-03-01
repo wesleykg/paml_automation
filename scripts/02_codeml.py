@@ -101,8 +101,39 @@ if method == "alternative":
     model_dict = NSsites_dict.get(2)
     lnL_value = model_dict.get('lnL')
     param_dict = model_dict.get('parameters')
-    site_classes_dict = param_dict.get()
-    print "This the site_classes dictionary:", site_classes_dict
+    site_classes_dict = param_dict.get('site classes')
+    site_classes_0_dict = site_classes_dict.get(0)
+    site_classes_0_proportion = site_classes_0_dict.get('proportion')
+    site_classes_0_branch_types = site_classes_0_dict.get('branch types')
+    site_classes_0_bg_omega = site_classes_0_branch_types.get('background')
+    site_classes_0_fg_omega = site_classes_0_branch_types.get('foreground')
+    print "\nThis the site_classes_0 proportion:", site_classes_0_proportion
+    print "This the site_classes_0 bg omega:", site_classes_0_bg_omega
+    print "This the site_classes_0 fg omega:", site_classes_0_fg_omega
+    site_classes_1_dict = site_classes_dict.get(1)
+    site_classes_1_proportion = site_classes_1_dict.get('proportion')
+    site_classes_1_branch_types = site_classes_1_dict.get('branch types')
+    site_classes_1_bg_omega = site_classes_1_branch_types.get('background')
+    site_classes_1_fg_omega = site_classes_1_branch_types.get('foreground')
+    print "\nThis the site_classes_1 proportion:", site_classes_1_proportion
+    print "This the site_classes_1 bg omega:", site_classes_1_bg_omega
+    print "This the site_classes_1 fg omega:", site_classes_1_fg_omega
+    site_classes_2a_dict = site_classes_dict.get(2)
+    site_classes_2a_proportion = site_classes_2a_dict.get('proportion')
+    site_classes_2a_branch_types = site_classes_2a_dict.get('branch types')
+    site_classes_2a_bg_omega = site_classes_2a_branch_types.get('background')
+    site_classes_2a_fg_omega = site_classes_2a_branch_types.get('foreground')
+    print "\nThis the site_classes_2a proportion:", site_classes_2a_proportion
+    print "This the site_classes_2a bg omega:", site_classes_2a_bg_omega
+    print "This the site_classes_2a fg omega:", site_classes_2a_fg_omega
+    site_classes_2b_dict = site_classes_dict.get(3)
+    site_classes_2b_proportion = site_classes_2b_dict.get('proportion')
+    site_classes_2b_branch_types = site_classes_2b_dict.get('branch types')
+    site_classes_2b_bg_omega = site_classes_2b_branch_types.get('background')
+    site_classes_2b_fg_omega = site_classes_2b_branch_types.get('foreground')
+    print "\nThis the site_classes_2b proportion:", site_classes_2b_proportion
+    print "This the site_classes_2b bg omega:", site_classes_2b_bg_omega
+    print "This the site_classes_2b fg omega:", site_classes_2b_fg_omega
     codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + '\n'
 elif method == "null":
     model_dict = NSsites_dict.get(2)
