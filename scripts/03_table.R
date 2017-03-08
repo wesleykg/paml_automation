@@ -1,21 +1,28 @@
-suppressPackageStartupMessages(library(dplyr))
+library(tidyr)
 
-lnL_results <- read.csv(file = "results/results.csv", header = FALSE, 
-												col.names = c("gene", "method", "lnL")
-												)
+paml_results.dat <- read.csv(file = '../results/results.csv', header = FALSE, 
+                       col.names = c(
+                         'gene', 'method','lnL')
+                       )
 
-lnL_results %>%
-  select(method) %>%
-  
+paml_results.dat <- spread(paml_results.dat, method, lnL)
 
-lnL_results %>%
-  filter(method %in% c("alternative", "null")) %>%
-  group_by(gene) %>%
-  mutate(LRT = -2*(lnL - lnL))
+paml_results.dat$BS2_LRT <- (paml_results.dat$alternative - 
+                               paml_results.dat$null)*2
 
+paml_results.dat$nratios_LRT <- (paml_results.dat$nratios - 
+                               paml_results.dat$m0)*2
 
-If data contains "null" and "alternative":
-	mutate() a new column of an LRT between each alternative and null
-	then compare data in that column to chi square distribution 
-	to produce p value
+chisq_1df <- qchisq(.95, df = 1)
 
+if (paml_results.dat$BS2_LRT > chisq_1df) {
+  paml_results.dat$BS2_result = 'Significant'
+} else {
+  paml_results.dat$BS2_result = 'Not significant'
+}
+
+if (paml_results.dat$nratios_LRT > chisq_1df) {
+  paml_results.dat$nratios_result = 'Significant'
+} else {
+  paml_results.dat$nratios_result = 'Not significant'
+}
