@@ -1,30 +1,36 @@
 library(tidyr)
+suppressPackageStartupMessages(library(dplyr))
 
-paml_results_dat <- read.csv(file = '../results/results.csv', header = FALSE, 
+## Read in the raw results file
+paml_results_dat <- read.csv(file = 'results/results.csv', header = FALSE, 
                        col.names = c(
-                         'gene', 'method','lnL')
+                         'gene', 'method','lnL', 'bg-omega', 'fg-omega')
                        )
 
-paml_results_dat <- spread(paml_results_dat, method, lnL)
+## Select just the LRT columns and make them wide format
+LRTdat <- paml_results_dat %>% select(gene, method, lnL)
+LRTdat <- spread(LRTdat, method, lnL)
 
-paml_results_dat$BS2_LRT <- (paml_results_dat$alternative - 
-                               paml_results_dat$null)*2
+## Record LRT result for each test type
+LRTdat$BS2_LRT <- (LRTdat$alternative - LRTdat$null)*2
+LRTdat$nratios_LRT <- (LRTdat$nratios - LRTdat$m0)*2
 
-paml_results_dat$nratios_LRT <- (paml_results_dat$nratios - 
-                               paml_results_dat$m0)*2
-
+## Record chi^2 significance threshold for later tests
 chisq_1df <- qchisq(.95, df = 1)
 
-if (paml_results_dat$BS2_LRT > chisq_1df) {
-  paml_results_dat$BS2_result = 'Significant'
+## Compare LRT to chi^2 value to test for significance. Write the significance
+## result into the table
+if (LRTdat$BS2_LRT > chisq_1df) {
+  LRTdat$BS2_result = 'Significant'
 } else {
-  paml_results_dat$BS2_result = 'Not significant'
+  LRTdat$BS2_result = 'Not significant'
 }
 
-if (paml_results_dat$nratios_LRT > chisq_1df) {
-  paml_results_dat$nratios_result = 'Significant'
+if (LRTdat$nratios_LRT > chisq_1df) {
+  LRTdat$nratios_result = 'Significant'
 } else {
-  paml_results_dat$nratios_result = 'Not significant'
+  LRTdat$nratios_result = 'Not significant'
 }
 
-write.csv(paml_results_dat, file = '../results/results_significant.csv')
+## Write significance results to file
+write.csv(LRTdat, file = 'results/results_significant.csv')
