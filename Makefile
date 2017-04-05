@@ -42,8 +42,8 @@ else
 	mkdir -p results/$*/$(method)
 	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre \
 	$(method)
-endif
-endif
+#endif
+#endif
 endif
 endif
 
@@ -51,6 +51,7 @@ results = $(wildcard $(method)_*.csv)
 
 results.csv: $(results)
 	find ./results -mindepth 2 -wholename *.csv -exec cat {} \; > ./results/$@
+	Rscript ./scripts/03_table.R ./results/$@
 
 .PHONY: all clean
 .DELETE_ON_ERROR:
