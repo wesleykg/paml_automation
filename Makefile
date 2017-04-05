@@ -9,28 +9,28 @@ clean:
 	mv $@ results/$*
 
 $(method)_%.csv: %.phy
-ifeq ($(method),branchsites2)
+ifeq ($(method),branchsites)
 	mkdir results/$*/alternative
 	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre \
 	alternative 
 	mkdir results/$*/null
 	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre null
-else
-ifeq ($(method),branchsites1)
-	mkdir -p results/$*/alternative
-	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre \
-	alternative
-	mkdir -p results/$*/m1
-	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre m1
-else
-ifeq ($(method),both)
-	mkdir -p results/$*/alternative
-	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre \
-	alternative
-	mkdir -p results/$*/null
-	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre null
-	mkdir -p results/$*/m1
-	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre m1
+#else
+#ifeq ($(method),branchsites1)
+#	mkdir -p results/$*/alternative
+#	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre \
+#	alternative
+#	mkdir -p results/$*/m1
+#	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre m1
+#else
+#ifeq ($(method),both)
+#	mkdir -p results/$*/alternative
+#	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre \
+#	alternative
+#	mkdir -p results/$*/null
+#	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre null
+#	mkdir -p results/$*/m1
+#	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre m1
 else
 ifeq ($(method),branch)
 	mkdir -p results/$*/m0
