@@ -39,11 +39,24 @@ ifeq ($(method),branch)
 	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre \
 	nratios
 else
+ifeq ($(method),all)
+	mkdir results/$*/alternative
+	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre \
+	alternative 
+	mkdir results/$*/null
+	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre null
+	mkdir -p results/$*/m0
+	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre m0
+	mkdir -p results/$*/nratios
+	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre \
+	nratios
+else
 	mkdir -p results/$*/$(method)
 	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre \
 	$(method)
 #endif
 #endif
+endif
 endif
 endif
 

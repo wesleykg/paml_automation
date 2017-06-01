@@ -4,8 +4,17 @@ suppressPackageStartupMessages(library(dplyr))
 ## Read in the raw results file
 paml_results_dat <- read.csv(file = 'results/results.csv', header = FALSE, 
                        col.names = c(
-                         'gene', 'method','lnL', 'bg-omega', 'fg-omega')
-                       )
+                         'gene', 'method','lnL', 'nratios_bg-omega', 
+                         'nratios_fg-omega', 'site_classes_0_proportion', 
+                         'site_classes_0_bg_omega', 'site_classes_0_fg_omega',
+                         'site_classes_1_proportion', 'site_classes_1_bg_omega',
+                         'site_classes_1_fg_omega', 
+                         'site_classes_2a_proportion',
+                         'site_classes_2a_bg_omega', 'site_classes_2a_fg_omega',
+                         'site_classes_2b_proportion', 
+                         'site_classes_2b_bg_omega', 'site_classes_2b_fg_omega'
+                                    )
+                            )
 
 ## Select just the LRT columns and make them wide format
 LRTdat <- paml_results_dat %>% select(gene, method, lnL)
@@ -13,7 +22,7 @@ LRTdat <- spread(LRTdat, method, lnL)
 
 ## Record LRT result for each test type
 LRTdat$BS2_LRT <- (LRTdat$alternative - LRTdat$null)*2
-LRTdat$nratios_LRT <- (LRTdat$nratios - LRTdat$m0)*2
+LRTdat$branch_LRT <- (LRTdat$nratios - LRTdat$m0)*2
 
 ## Record chi^2 significance threshold for later tests
 chisq_1df <- qchisq(.95, df = 1)
@@ -26,10 +35,10 @@ if (LRTdat$BS2_LRT > chisq_1df) {
   LRTdat$BS2_result = 'Not significant'
 }
 
-if (LRTdat$nratios_LRT > chisq_1df) {
-  LRTdat$nratios_result = 'Significant'
+if (LRTdat$branch_LRT > chisq_1df) {
+  LRTdat$branch_result = 'Significant'
 } else {
-  LRTdat$nratios_result = 'Not significant'
+  LRTdat$branch_result = 'Not significant'
 }
 
 ## Write significance results to file
