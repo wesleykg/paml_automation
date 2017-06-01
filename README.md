@@ -5,7 +5,7 @@ This set of scripts allows you to automate running codeml from PAML It adds noth
 
 ##Program Requirements##
 
-1. Python2 & Biopython
+1. Python2, Biopython, and docopt
 2. GNU Make and base UNIX commands
 
 ##Data Requirements##
@@ -21,15 +21,13 @@ This set of scripts allows you to automate running codeml from PAML It adds noth
   * Tree files must use the .tre filetype
 3. Open a terminal window and `cd` to the project directory
 4. Type `make` followed by `method=` any of the following commands to execute the program
-  * `branchsites1`: Run Branch-Sites Test 1
-  * `branchsites2`: Run Branch-Sites Test 2
-  * `both`: Runs Branch-Sites Test 1 & 2
-  * `branch`: Run Branch Test
-  * `alternative`: Run the alternative model of Branch-Sites Test 1 & 2
+  * `branchsites`: Run Branch-Sites Test 2
+  * `branch`: Run Branch test
+  * `all`: Run both Branch and Branch-Sites 2 test
+  * `alternative`: Run the alternative model of Branch-Sites Test 2
   * `null`: Run the null model of Branch-Sites Test 2
-  * `m1`: Run the null model of Branch-Sites Test 1
-  * `m0`: Run the one-ratio model of Branch Test
-  * `nratios`: Run the n-ratio model of Branch Test
+  * `m0`: Run the one-ratio model of Branch test
+  * `nratios`: Run the n-ratio model of Branch test
   * `clean`: Removes any files created by make
 
 ---
@@ -39,8 +37,9 @@ This set of scripts allows you to automate running codeml from PAML It adds noth
 * Input a fasta file with any name and convert it into a phylip file suitable for use in PAML
 * Run Branch-Sites Test 1 & 2
 * Write results into a .csv file
+* Analyze results using R
+* Create a table with results
 
 ###Features to be added:###
 
-* Analyze results using R
-* Create a table with results
+
