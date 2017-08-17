@@ -1,0 +1,1 @@
+gene-name,lnL-value,model,,,Site-class-0_proportion,Site-class-0_bg-omega,Site-class-0_fg-omega,Site-class-1_proportion,Site-class-1_bg-omega,Site-class-1_fg-omega,Site-class-2a_proportion,Site-class-2a_bg-omega,Site-class-2a_fg-omega,Site-class-2b_proportion,Site-class-2b_bg-omega,Site-class-2b_fg-omega
