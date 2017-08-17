@@ -41,6 +41,10 @@ elif method == "null":
     model = 2
     NSsites = [2]
     fix_omega = 1
+elif method == "m2":
+	model = 0
+	NSsites = [2]
+	fix_omega = 0
 elif method == "m1":
     model = 0
     NSsites = [1]
