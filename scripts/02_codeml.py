@@ -33,29 +33,55 @@ if in_ipython() is True:
 gene_name = os.path.splitext(alignment_file)[0]  # Filename without .phy suffix
 alignment_dir = os.path.join('results/' + gene_name)
 
-if method == "alternative":
+if method == "bsA_alternative":
     model = 2
     NSsites = [2]
+    ncatG = 5
     fix_omega = 0
-elif method == "null":
+elif method == "bsA_null":
     model = 2
     NSsites = [2]
+    ncatG = 5
     fix_omega = 1
+elif method == "CmC":
+    model = 3
+    NSsites = [2]
+    ncatG = 3
+    fix_omega = 0
+elif method == "CmD":
+    model = 3
+    NSsites = [3]
+    ncatG = 3
+    fix_omega = 0
+elif method == "m3":
+    model = 0
+    NSsites = [3]
+    ncatG = 3
+    fix_omega = 0
+elif method == "m2a_rel":
+    model = 0
+    NSsites = [22]
+    ncatG = 5
+    fix_omega = 0
 elif method == "m2":
-	model = 0
-	NSsites = [2]
-	fix_omega = 0
+    model = 0
+    NSsites = [2]
+    ncatG = 5
+    fix_omega = 0
 elif method == "m1":
     model = 0
     NSsites = [1]
+    ncatG = 5
     fix_omega = 0
 elif method == "m0":
     model = 0
     NSsites = [0]
+    ncatG = 5
     fix_omega = 0
 elif method == "nratios":
     model = 2
     NSsites = [0]
+    ncatG = 5
     fix_omega = 0
 
 # codeml module
@@ -69,6 +95,7 @@ cml.out_file = os.path.join(cml.working_dir, "mlc")
 # 1.Model-specific
 cml.set_options(model=model)
 cml.set_options(NSsites=NSsites)
+cml.set_options(ncatG=ncatG)
 cml.set_options(fix_omega=fix_omega)
 
 # 2. Optional settings
@@ -81,7 +108,6 @@ cml.set_options(RateAncestor=0)
 cml.set_options(icode=0)
 cml.set_options(CodonFreq=2)
 cml.set_options(clock=0)
-cml.set_options(ncatG=5)
 cml.set_options(runmode=0)
 cml.set_options(fix_kappa=0)
 cml.set_options(fix_alpha=1)
@@ -96,12 +122,14 @@ cml.set_options(Mgene=0)
 cml.set_options(kappa=2)
 cml.set_options(ndata=1)
 
+print "This is the method being used:", method
+
 # Runs codeml and stores the results
 results = cml.run(verbose=True)
 
 # Retrieve results
 NSsites_dict = results.get('NSsites')
-if method == "alternative" or "null":
+if method == "bsA_alternative":
     model_dict = NSsites_dict.get(2)
     lnL_value = model_dict.get('lnL')
     param_dict = model_dict.get('parameters')
@@ -136,6 +164,61 @@ if method == "alternative" or "null":
         ',' + str(site_classes_2b_proportion) + ',' +\
         str(site_classes_2b_bg_omega) + ',' + str(site_classes_2b_fg_omega) +\
         '\n'
+elif method == "bsA_null":
+    model_dict = NSsites_dict.get(2)
+    lnL_value = model_dict.get('lnL')
+    param_dict = model_dict.get('parameters')
+    site_classes_dict = param_dict.get('site classes')
+    site_classes_0_dict = site_classes_dict.get(0)
+    site_classes_0_proportion = site_classes_0_dict.get('proportion')
+    site_classes_0_branch_types = site_classes_0_dict.get('branch types')
+    site_classes_0_bg_omega = site_classes_0_branch_types.get('background')
+    site_classes_0_fg_omega = site_classes_0_branch_types.get('foreground')
+    site_classes_1_dict = site_classes_dict.get(1)
+    site_classes_1_proportion = site_classes_1_dict.get('proportion')
+    site_classes_1_branch_types = site_classes_1_dict.get('branch types')
+    site_classes_1_bg_omega = site_classes_1_branch_types.get('background')
+    site_classes_1_fg_omega = site_classes_1_branch_types.get('foreground')
+    site_classes_2a_dict = site_classes_dict.get(2)
+    site_classes_2a_proportion = site_classes_2a_dict.get('proportion')
+    site_classes_2a_branch_types = site_classes_2a_dict.get('branch types')
+    site_classes_2a_bg_omega = site_classes_2a_branch_types.get('background')
+    site_classes_2a_fg_omega = site_classes_2a_branch_types.get('foreground')
+    site_classes_2b_dict = site_classes_dict.get(3)
+    site_classes_2b_proportion = site_classes_2b_dict.get('proportion')
+    site_classes_2b_branch_types = site_classes_2b_dict.get('branch types')
+    site_classes_2b_bg_omega = site_classes_2b_branch_types.get('background')
+    site_classes_2b_fg_omega = site_classes_2b_branch_types.get('foreground')
+    codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + ',' +\
+        ',' + ',' + str(site_classes_0_proportion) + ',' +\
+        str(site_classes_0_bg_omega) + ',' + str(site_classes_0_fg_omega) +\
+        ',' + str(site_classes_1_proportion) + ',' +\
+        str(site_classes_1_bg_omega) + ',' + str(site_classes_1_fg_omega) +\
+        ',' + str(site_classes_2a_proportion) + ',' +\
+        str(site_classes_2a_bg_omega) + ',' + str(site_classes_2a_fg_omega) +\
+        ',' + str(site_classes_2b_proportion) + ',' +\
+        str(site_classes_2b_bg_omega) + ',' + str(site_classes_2b_fg_omega) +\
+        '\n'
+elif method == "CmC":
+    model_dict = NSsites_dict.get(2)
+    lnL_value = model_dict.get('lnL')
+    codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + '\n'
+elif method == "CmD":
+    model_dict = NSsites_dict.get(3)
+    lnL_value = model_dict.get('lnL')
+    codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + '\n'
+elif method == "m3":
+    model_dict = NSsites_dict.get(3)
+    lnL_value = model_dict.get('lnL')
+    codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + '\n'
+elif method == "m2a_rel":
+    model_dict = NSsites_dict.get(22)
+    lnL_value = model_dict.get('lnL')
+    codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + '\n'
+elif method == "m2":
+    model_dict = NSsites_dict.get(2)
+    lnL_value = model_dict.get('lnL')
+    codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + '\n'
 elif method == "m1":
     model_dict = NSsites_dict.get(1)
     lnL_value = model_dict.get('lnL')
