@@ -91,6 +91,7 @@ endif
 endif
 endif
 endif
+endif
 
 results = $(wildcard $(method)_*.csv)
 
