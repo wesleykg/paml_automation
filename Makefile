@@ -41,10 +41,24 @@ ifeq ($(method),clademodelC)
 	CmC
 else
 ifeq ($(method),clademodelD)
-	mkdir -p results/$*/m2a_rel
+	mkdir -p results/$*/m3
 	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre \
 	m3
+	mkdir -p results/$*/CmD
+	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre \
+	CmD
+else
+ifeq ($(method),clademodels)
+	mkdir -p results/$*/m2a_rel
+	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre \
+	m2a_rel
 	mkdir -p results/$*/CmC
+	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre \
+	CmC
+	mkdir -p results/$*/m3
+	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre \
+	m3
+	mkdir -p results/$*/CmD
 	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=-1 $< *.tre \
 	CmD
 else
