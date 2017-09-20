@@ -2,7 +2,7 @@ library(tidyr)
 suppressPackageStartupMessages(library(dplyr))
 
 ## Read in the raw results file
-paml_results_dat <- read.csv(file = 'results/results.csv', header = TRUE, 
+paml_results_dat <- read.csv(file = 'results/results.csv', header = FALSE, 
                        col.names = c(
                          'gene', 'method','lnL', 'nratios_bg-omega', 
                          'nratios_fg-omega', 'site_classes_0_proportion', 
