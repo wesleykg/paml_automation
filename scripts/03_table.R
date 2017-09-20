@@ -2,7 +2,7 @@ library(tidyr)
 suppressPackageStartupMessages(library(dplyr))
 
 ## Read in the raw results file
-paml_results_dat <- read.csv(file = 'results/results.csv', header = FALSE, 
+paml_results_dat <- read.csv(file = 'results/results.csv', header = TRUE, 
                        col.names = c(
                          'gene', 'method','lnL', 'nratios_bg-omega', 
                          'nratios_fg-omega', 'site_classes_0_proportion', 
@@ -31,10 +31,10 @@ if ("CmC" %in% colnames(LRTdat)){
   LRTdat$CmC_LRT <- (LRTdat$m2a_rel - LRTdat$CmC)*-2
 }
 if ("CmD" %in% colnames(LRTdat)){
-  LRTdat$CmD_LRT <- (LRTdat$m3 - LRTdat$CmC)*-2
+  LRTdat$CmD_LRT <- (LRTdat$m3 - LRTdat$CmD)*-2
 }
 ## Record chi^2 significance threshold for later tests
-chisq_1df <- qchisq(.95, df = 1)
+# chisq_1df <- qchisq(.95, df = 1)
 
 ## Compare LRT to chi^2 value to test for significance. Write the significance
 ## result into the table
