@@ -51,4 +51,4 @@ if ("CmD" %in% colnames(LRTdat)){
 # }
 
 ## Write significance results to file
-write.csv(LRTdat, file = 'results/results_LRT.csv')
+write.csv(LRTdat, file = 'results/results_LRT.csv', row.names = FALSE)
