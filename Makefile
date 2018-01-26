@@ -10,28 +10,12 @@ clean:
 
 $(method)_%.csv: %.phy
 ifeq ($(method),branchsites)
-	mkdir results/$*/bs2_alternative
+	mkdir results/$*/bsA_alternative
 	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=1 $< *.tre \
 	bsA_alternative 
-	mkdir results/$*/bs2_null
+	mkdir results/$*/bsA_null
 	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=1 $< *.tre \
 	bsA_null
-#else
-#ifeq ($(method),branchsites1)
-#	mkdir -p results/$*/b2_alternative
-#	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=1 $< *.tre \
-#	alternative
-#	mkdir -p results/$*/m1
-#	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=1 $< *.tre m1
-#else
-#ifeq ($(method),both)
-#	mkdir -p results/$*/bs2_alternative
-#	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=1 $< *.tre \
-#	alternative
-#	mkdir -p results/$*/bs2_null
-#	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=1 $< *.tre null
-#	mkdir -p results/$*/m1
-#	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=1 $< *.tre m1
 else
 ifeq ($(method),clademodelC)
 	mkdir -p results/$*/m2a_rel
@@ -71,10 +55,10 @@ ifeq ($(method),branch)
 	nratios
 else
 ifeq ($(method),all)
-	mkdir results/$*/bs2_alternative
+	mkdir results/$*/bsA_alternative
 	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=1 $< *.tre \
 	bsA_alternative 
-	mkdir results/$*/bs2_null
+	mkdir results/$*/bsA_null
 	python ./scripts/02_codeml.py --clean_data=0 --fix_blength=1 $< *.tre \
 	bsA_null
 	mkdir -p results/$*/m0
