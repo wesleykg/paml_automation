@@ -21,8 +21,8 @@ LRTdat <- paml_results_dat %>% select(gene, method, lnL)
 LRTdat <- spread(LRTdat, method, lnL)
 
 ## Record LRT result for each test type
-if ("alternative" %in% colnames(LRTdat)) {
-  LRTdat$BS2_LRT <- (LRTdat$null - LRTdat$alternative)*-2
+if ("bsA_alternative" %in% colnames(LRTdat)) {
+  LRTdat$bsA_LRT <- (LRTdat$bsA_null - LRTdat$bsA_alternative)*-2
 }
 if ("nratios" %in% colnames(LRTdat)){
   LRTdat$branch_LRT <- (LRTdat$m0 - LRTdat$nratios)*-2
