@@ -13,6 +13,8 @@ def in_ipython():
         return True
     except NameError:
         return False
+
+
 # Run in a script from the command-line
 if in_ipython() is False:
     from docopt import docopt  # Command-line argument handler
@@ -160,8 +162,7 @@ if method == "bsA_alternative":
         ',' + str(site_class_2a_proportion) + ',' +\
         str(site_class_2a_bg_omega) + ',' + str(site_class_2a_fg_omega) +\
         ',' + str(site_class_2b_proportion) + ',' +\
-        str(site_class_2b_bg_omega) + ',' + str(site_class_2b_fg_omega) +\
-        '\n'
+        str(site_class_2b_bg_omega) + ',' + str(site_class_2b_fg_omega) + '\n'
 elif method == "bsA_null":
     model_dict = NSsites_dict.get(2)
     lnL_value = model_dict.get('lnL')
@@ -195,12 +196,7 @@ elif method == "bsA_null":
         ',' + str(site_class_2a_proportion) + ',' +\
         str(site_class_2a_bg_omega) + ',' + str(site_class_2a_fg_omega) +\
         ',' + str(site_class_2b_proportion) + ',' +\
-        str(site_class_2b_bg_omega) + ',' + str(site_class_2b_fg_omega) +\
-        '\n'
-elif method == "CmC":
-    model_dict = NSsites_dict.get(2)
-    lnL_value = model_dict.get('lnL')
-    codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + '\n'
+        str(site_class_2b_bg_omega) + ',' + str(site_class_2b_fg_omega) + '\n'
 elif method == "CmD":
     model_dict = NSsites_dict.get(3)
     lnL_value = model_dict.get('lnL')
@@ -227,13 +223,29 @@ elif method == "CmD":
         ',' + str(site_class_1_proportion) + ',' +\
         str(site_class_1_bg_omega) + ',' + str(site_class_1_fg_omega) +\
         ',' + str(site_class_2_proportion) + ',' +\
-        str(site_class_2_bg_omega) + ',' + str(site_class_2_fg_omega) +\
-        '\n'
+        str(site_class_2_bg_omega) + ',' + str(site_class_2_fg_omega) + '\n'
 elif method == "m3":
     model_dict = NSsites_dict.get(3)
     lnL_value = model_dict.get('lnL')
     param_dict = model_dict.get('parameters')
-    print "This is the parameters dictionary:", param_dict
+    site_classes_dict = param_dict.get('site classes')
+    site_class_0_dict = site_classes_dict.get(0)
+    site_class_0_proportion = site_class_0_dict.get('proportion')
+    site_class_0_omega = site_class_0_dict.get('omega')
+    site_class_1_dict = site_classes_dict.get(1)
+    site_class_1_proportion = site_class_1_dict.get('proportion')
+    site_class_1_omega = site_class_1_dict.get('omega')
+    site_class_2_dict = site_classes_dict.get(2)
+    site_class_2_proportion = site_class_2_dict.get('proportion')
+    site_class_2_omega = site_class_2_dict.get('omega')
+    codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + ',' +\
+        ',' + ',' + str(site_class_0_proportion) + ',' +\
+        str(site_class_0_omega) + ',' + ',' + str(site_class_1_proportion) +\
+        ',' + str(site_class_1_omega) + ',' + ',' +\
+        str(site_class_2_proportion) + ',' + str(site_class_2_omega) + '\n'
+elif method == "CmC":
+    model_dict = NSsites_dict.get(2)
+    lnL_value = model_dict.get('lnL')
     codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + '\n'
 elif method == "m2a_rel":
     model_dict = NSsites_dict.get(22)
@@ -251,18 +263,18 @@ elif method == "m0":
     model_dict = NSsites_dict.get(0)
     lnL_value = model_dict.get('lnL')
     param_dict = model_dict.get('parameters')
-    bg_omega_value = param_dict.get('omega')
+    bg_omega = param_dict.get('omega')
     codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + ',' + \
-        str(bg_omega_value) + '\n'
+        str(bg_omega) + '\n'
 elif method == "nratios":
     model_dict = NSsites_dict.get(0)
     lnL_value = model_dict.get('lnL')
     param_dict = model_dict.get('parameters')
     omega_values = param_dict.get('omega')
-    bg_omega_value = omega_values[0]
-    fg_omega_value = omega_values[1]
+    bg_omega = omega_values[0]
+    fg_omega = omega_values[1]
     codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + ',' + \
-        str(bg_omega_value) + ',' + str(fg_omega_value) + '\n'
+        str(bg_omega) + ',' + str(fg_omega) + '\n'
 
 results_filename = os.path.join(alignment_dir, method +
                                 "_" + gene_name + ".csv")
