@@ -9,10 +9,10 @@ paml_results_dat <- read.csv(file = 'results/results.csv', header = FALSE,
                          'site_class_0_bg_omega', 'site_class_0_fg_omega',
                          'site_class_1_proportion', 'site_class_1_bg_omega',
                          'site_class_1_fg_omega', 
-                         'site_class_2a_proportion',
-                         'site_class_2a_bg_omega', 'site_class_2a_fg_omega',
-                         'site_class_2b_proportion', 
-                         'site_class_2b_bg_omega', 'site_class_2b_fg_omega'
+                         'site_class_2_proportion',
+                         'site_class_2_bg_omega', 'site_class_2_fg_omega',
+                         'site_class_3_proportion', 
+                         'site_class_3_bg_omega', 'site_class_3_fg_omega'
                                     )
                             )
 
