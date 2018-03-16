@@ -232,6 +232,8 @@ elif method == "CmD":
 elif method == "m3":
     model_dict = NSsites_dict.get(3)
     lnL_value = model_dict.get('lnL')
+    param_dict = model_dict.get('parameters')
+    print "This is the parameters dictionary:", param_dict
     codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + '\n'
 elif method == "m2a_rel":
     model_dict = NSsites_dict.get(22)
