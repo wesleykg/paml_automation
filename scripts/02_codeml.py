@@ -28,7 +28,7 @@ if in_ipython() is False:
 if in_ipython() is True:
     alignment_file = 'rps19.phy'
     tree_file = 'whole_gene_tree.tre'
-    method = 'alternative'
+    method = 'bsA_alternative'
     clean_data = 0
     fix_blength = 0
 
@@ -246,11 +246,49 @@ elif method == "m3":
 elif method == "CmC":
     model_dict = NSsites_dict.get(2)
     lnL_value = model_dict.get('lnL')
-    codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + '\n'
+    param_dict = model_dict.get('parameters')
+    site_classes_dict = param_dict.get('site classes')
+    site_class_0_dict = site_classes_dict.get(0)
+    site_class_0_proportion = site_class_0_dict.get('proportion')
+    site_class_0_branch_types = site_class_0_dict.get('branch types')
+    site_class_0_bg_omega = site_class_0_branch_types.get(0)
+    site_class_0_fg_omega = site_class_0_branch_types.get(1)
+    site_class_1_dict = site_classes_dict.get(1)
+    site_class_1_proportion = site_class_1_dict.get('proportion')
+    site_class_1_branch_types = site_class_1_dict.get('branch types')
+    site_class_1_bg_omega = site_class_1_branch_types.get(0)
+    site_class_1_fg_omega = site_class_1_branch_types.get(1)
+    site_class_2_dict = site_classes_dict.get(2)
+    site_class_2_proportion = site_class_2_dict.get('proportion')
+    site_class_2_branch_types = site_class_2_dict.get('branch types')
+    site_class_2_bg_omega = site_class_2_branch_types.get(0)
+    site_class_2_fg_omega = site_class_2_branch_types.get(1)
+    codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + ',' +\
+        ',' + ',' + str(site_class_0_proportion) + ',' +\
+        str(site_class_0_bg_omega) + ',' + str(site_class_0_fg_omega) +\
+        ',' + str(site_class_1_proportion) + ',' +\
+        str(site_class_1_bg_omega) + ',' + str(site_class_1_fg_omega) +\
+        ',' + str(site_class_2_proportion) + ',' +\
+        str(site_class_2_bg_omega) + ',' + str(site_class_2_fg_omega) + '\n'
 elif method == "m2a_rel":
     model_dict = NSsites_dict.get(22)
     lnL_value = model_dict.get('lnL')
-    codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + '\n'
+    param_dict = model_dict.get('parameters')
+    site_classes_dict = param_dict.get('site classes')
+    site_class_0_dict = site_classes_dict.get(0)
+    site_class_0_proportion = site_class_0_dict.get('proportion')
+    site_class_0_omega = site_class_0_dict.get('omega')
+    site_class_1_dict = site_classes_dict.get(1)
+    site_class_1_proportion = site_class_1_dict.get('proportion')
+    site_class_1_omega = site_class_1_dict.get('omega')
+    site_class_2_dict = site_classes_dict.get(2)
+    site_class_2_proportion = site_class_2_dict.get('proportion')
+    site_class_2_omega = site_class_2_dict.get('omega')
+    codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + ',' +\
+        ',' + ',' + str(site_class_0_proportion) + ',' +\
+        str(site_class_0_omega) + ',' + ',' + str(site_class_1_proportion) +\
+        ',' + str(site_class_1_omega) + ',' + ',' +\
+        str(site_class_2_proportion) + ',' + str(site_class_2_omega) + '\n'
 elif method == "m2":
     model_dict = NSsites_dict.get(2)
     lnL_value = model_dict.get('lnL')
