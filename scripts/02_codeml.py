@@ -122,8 +122,6 @@ cml.set_options(Mgene=0)
 cml.set_options(kappa=2)
 cml.set_options(ndata=1)
 
-print "This is the method being used:", method
-
 # Runs codeml and stores the results
 results = cml.run(verbose=True)
 
@@ -134,70 +132,70 @@ if method == "bsA_alternative":
     lnL_value = model_dict.get('lnL')
     param_dict = model_dict.get('parameters')
     site_classes_dict = param_dict.get('site classes')
-    site_classes_0_dict = site_classes_dict.get(0)
-    site_classes_0_proportion = site_classes_0_dict.get('proportion')
-    site_classes_0_branch_types = site_classes_0_dict.get('branch types')
-    site_classes_0_bg_omega = site_classes_0_branch_types.get('background')
-    site_classes_0_fg_omega = site_classes_0_branch_types.get('foreground')
-    site_classes_1_dict = site_classes_dict.get(1)
-    site_classes_1_proportion = site_classes_1_dict.get('proportion')
-    site_classes_1_branch_types = site_classes_1_dict.get('branch types')
-    site_classes_1_bg_omega = site_classes_1_branch_types.get('background')
-    site_classes_1_fg_omega = site_classes_1_branch_types.get('foreground')
-    site_classes_2a_dict = site_classes_dict.get(2)
-    site_classes_2a_proportion = site_classes_2a_dict.get('proportion')
-    site_classes_2a_branch_types = site_classes_2a_dict.get('branch types')
-    site_classes_2a_bg_omega = site_classes_2a_branch_types.get('background')
-    site_classes_2a_fg_omega = site_classes_2a_branch_types.get('foreground')
-    site_classes_2b_dict = site_classes_dict.get(3)
-    site_classes_2b_proportion = site_classes_2b_dict.get('proportion')
-    site_classes_2b_branch_types = site_classes_2b_dict.get('branch types')
-    site_classes_2b_bg_omega = site_classes_2b_branch_types.get('background')
-    site_classes_2b_fg_omega = site_classes_2b_branch_types.get('foreground')
+    site_class_0_dict = site_classes_dict.get(0)
+    site_class_0_proportion = site_class_0_dict.get('proportion')
+    site_class_0_branch_types = site_class_0_dict.get('branch types')
+    site_class_0_bg_omega = site_class_0_branch_types.get('background')
+    site_class_0_fg_omega = site_class_0_branch_types.get('foreground')
+    site_class_1_dict = site_classes_dict.get(1)
+    site_class_1_proportion = site_class_1_dict.get('proportion')
+    site_class_1_branch_types = site_class_1_dict.get('branch types')
+    site_class_1_bg_omega = site_class_1_branch_types.get('background')
+    site_class_1_fg_omega = site_class_1_branch_types.get('foreground')
+    site_class_2a_dict = site_classes_dict.get(2)
+    site_class_2a_proportion = site_class_2a_dict.get('proportion')
+    site_class_2a_branch_types = site_class_2a_dict.get('branch types')
+    site_class_2a_bg_omega = site_class_2a_branch_types.get('background')
+    site_class_2a_fg_omega = site_class_2a_branch_types.get('foreground')
+    site_class_2b_dict = site_classes_dict.get(3)
+    site_class_2b_proportion = site_class_2b_dict.get('proportion')
+    site_class_2b_branch_types = site_class_2b_dict.get('branch types')
+    site_class_2b_bg_omega = site_class_2b_branch_types.get('background')
+    site_class_2b_fg_omega = site_class_2b_branch_types.get('foreground')
     codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + ',' +\
-        ',' + ',' + str(site_classes_0_proportion) + ',' +\
-        str(site_classes_0_bg_omega) + ',' + str(site_classes_0_fg_omega) +\
-        ',' + str(site_classes_1_proportion) + ',' +\
-        str(site_classes_1_bg_omega) + ',' + str(site_classes_1_fg_omega) +\
-        ',' + str(site_classes_2a_proportion) + ',' +\
-        str(site_classes_2a_bg_omega) + ',' + str(site_classes_2a_fg_omega) +\
-        ',' + str(site_classes_2b_proportion) + ',' +\
-        str(site_classes_2b_bg_omega) + ',' + str(site_classes_2b_fg_omega) +\
+        ',' + ',' + str(site_class_0_proportion) + ',' +\
+        str(site_class_0_bg_omega) + ',' + str(site_class_0_fg_omega) +\
+        ',' + str(site_class_1_proportion) + ',' +\
+        str(site_class_1_bg_omega) + ',' + str(site_class_1_fg_omega) +\
+        ',' + str(site_class_2a_proportion) + ',' +\
+        str(site_class_2a_bg_omega) + ',' + str(site_class_2a_fg_omega) +\
+        ',' + str(site_class_2b_proportion) + ',' +\
+        str(site_class_2b_bg_omega) + ',' + str(site_class_2b_fg_omega) +\
         '\n'
 elif method == "bsA_null":
     model_dict = NSsites_dict.get(2)
     lnL_value = model_dict.get('lnL')
     param_dict = model_dict.get('parameters')
     site_classes_dict = param_dict.get('site classes')
-    site_classes_0_dict = site_classes_dict.get(0)
-    site_classes_0_proportion = site_classes_0_dict.get('proportion')
-    site_classes_0_branch_types = site_classes_0_dict.get('branch types')
-    site_classes_0_bg_omega = site_classes_0_branch_types.get('background')
-    site_classes_0_fg_omega = site_classes_0_branch_types.get('foreground')
-    site_classes_1_dict = site_classes_dict.get(1)
-    site_classes_1_proportion = site_classes_1_dict.get('proportion')
-    site_classes_1_branch_types = site_classes_1_dict.get('branch types')
-    site_classes_1_bg_omega = site_classes_1_branch_types.get('background')
-    site_classes_1_fg_omega = site_classes_1_branch_types.get('foreground')
-    site_classes_2a_dict = site_classes_dict.get(2)
-    site_classes_2a_proportion = site_classes_2a_dict.get('proportion')
-    site_classes_2a_branch_types = site_classes_2a_dict.get('branch types')
-    site_classes_2a_bg_omega = site_classes_2a_branch_types.get('background')
-    site_classes_2a_fg_omega = site_classes_2a_branch_types.get('foreground')
-    site_classes_2b_dict = site_classes_dict.get(3)
-    site_classes_2b_proportion = site_classes_2b_dict.get('proportion')
-    site_classes_2b_branch_types = site_classes_2b_dict.get('branch types')
-    site_classes_2b_bg_omega = site_classes_2b_branch_types.get('background')
-    site_classes_2b_fg_omega = site_classes_2b_branch_types.get('foreground')
+    site_class_0_dict = site_classes_dict.get(0)
+    site_class_0_proportion = site_class_0_dict.get('proportion')
+    site_class_0_branch_types = site_class_0_dict.get('branch types')
+    site_class_0_bg_omega = site_class_0_branch_types.get('background')
+    site_class_0_fg_omega = site_class_0_branch_types.get('foreground')
+    site_class_1_dict = site_classes_dict.get(1)
+    site_class_1_proportion = site_class_1_dict.get('proportion')
+    site_class_1_branch_types = site_class_1_dict.get('branch types')
+    site_class_1_bg_omega = site_class_1_branch_types.get('background')
+    site_class_1_fg_omega = site_class_1_branch_types.get('foreground')
+    site_class_2a_dict = site_classes_dict.get(2)
+    site_class_2a_proportion = site_class_2a_dict.get('proportion')
+    site_class_2a_branch_types = site_class_2a_dict.get('branch types')
+    site_class_2a_bg_omega = site_class_2a_branch_types.get('background')
+    site_class_2a_fg_omega = site_class_2a_branch_types.get('foreground')
+    site_class_2b_dict = site_classes_dict.get(3)
+    site_class_2b_proportion = site_class_2b_dict.get('proportion')
+    site_class_2b_branch_types = site_class_2b_dict.get('branch types')
+    site_class_2b_bg_omega = site_class_2b_branch_types.get('background')
+    site_class_2b_fg_omega = site_class_2b_branch_types.get('foreground')
     codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + ',' +\
-        ',' + ',' + str(site_classes_0_proportion) + ',' +\
-        str(site_classes_0_bg_omega) + ',' + str(site_classes_0_fg_omega) +\
-        ',' + str(site_classes_1_proportion) + ',' +\
-        str(site_classes_1_bg_omega) + ',' + str(site_classes_1_fg_omega) +\
-        ',' + str(site_classes_2a_proportion) + ',' +\
-        str(site_classes_2a_bg_omega) + ',' + str(site_classes_2a_fg_omega) +\
-        ',' + str(site_classes_2b_proportion) + ',' +\
-        str(site_classes_2b_bg_omega) + ',' + str(site_classes_2b_fg_omega) +\
+        ',' + ',' + str(site_class_0_proportion) + ',' +\
+        str(site_class_0_bg_omega) + ',' + str(site_class_0_fg_omega) +\
+        ',' + str(site_class_1_proportion) + ',' +\
+        str(site_class_1_bg_omega) + ',' + str(site_class_1_fg_omega) +\
+        ',' + str(site_class_2a_proportion) + ',' +\
+        str(site_class_2a_bg_omega) + ',' + str(site_class_2a_fg_omega) +\
+        ',' + str(site_class_2b_proportion) + ',' +\
+        str(site_class_2b_bg_omega) + ',' + str(site_class_2b_fg_omega) +\
         '\n'
 elif method == "CmC":
     model_dict = NSsites_dict.get(2)
@@ -206,7 +204,31 @@ elif method == "CmC":
 elif method == "CmD":
     model_dict = NSsites_dict.get(3)
     lnL_value = model_dict.get('lnL')
-    codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + '\n'
+    param_dict = model_dict.get('parameters')
+    site_classes_dict = param_dict.get('site classes')
+    site_class_0_dict = site_classes_dict.get(0)
+    site_class_0_proportion = site_class_0_dict.get('proportion')
+    site_class_0_branch_types = site_class_0_dict.get('branch types')
+    site_class_0_bg_omega = site_class_0_branch_types.get(0)
+    site_class_0_fg_omega = site_class_0_branch_types.get(1)
+    site_class_1_dict = site_classes_dict.get(1)
+    site_class_1_proportion = site_class_1_dict.get('proportion')
+    site_class_1_branch_types = site_class_1_dict.get('branch types')
+    site_class_1_bg_omega = site_class_1_branch_types.get(0)
+    site_class_1_fg_omega = site_class_1_branch_types.get(1)
+    site_class_2_dict = site_classes_dict.get(2)
+    site_class_2_proportion = site_class_2_dict.get('proportion')
+    site_class_2_branch_types = site_class_2_dict.get('branch types')
+    site_class_2_bg_omega = site_class_2_branch_types.get(0)
+    site_class_2_fg_omega = site_class_2_branch_types.get(1)
+    codeml_data = gene_name + ',' + method + ',' + str(lnL_value) + ',' +\
+        ',' + ',' + str(site_class_0_proportion) + ',' +\
+        str(site_class_0_bg_omega) + ',' + str(site_class_0_fg_omega) +\
+        ',' + str(site_class_1_proportion) + ',' +\
+        str(site_class_1_bg_omega) + ',' + str(site_class_1_fg_omega) +\
+        ',' + str(site_class_2_proportion) + ',' +\
+        str(site_class_2_bg_omega) + ',' + str(site_class_2_fg_omega) +\
+        '\n'
 elif method == "m3":
     model_dict = NSsites_dict.get(3)
     lnL_value = model_dict.get('lnL')
